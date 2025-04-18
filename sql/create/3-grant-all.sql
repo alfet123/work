@@ -1,0 +1,1 @@
+GRANT ALL ON work.* TO 'admin'@'localhost';
