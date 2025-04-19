@@ -239,13 +239,24 @@ class DataBase {
     // Возвращает список СВТ
     public function getSvtList($svtFilter=[])
     {
+        $offset = 1;
+        $limit = $GLOBALS['limit'];
+
+        if (isset($svtFilter['offset']) && is_numeric($svtFilter['offset'])) {
+            $offset = intval($svtFilter['offset']);
+        }
+
+        if (isset($svtFilter['limit']) && is_numeric($svtFilter['limit'])) {
+            $limit = intval($svtFilter['limit']);
+        }
+
         $svt = [];
 
         $query  = "select * ";
         $query .= "from view_svt_all ";
         $query .= self::whereExpression($svtFilter);
         $query .= self::orderExpression();
-        $query .= "limit 25";
+        $query .= "limit ".$offset.", ".$limit;
 
 //echo "<pre><br>";
 //echo "getSvtList() -> ".$query;

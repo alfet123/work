@@ -45,6 +45,14 @@ label {
     font-size: 10px;
 }
 
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: auto;
+}
+
 /*******************/
 /*** Page Global ***/
 /*******************/
@@ -164,7 +172,30 @@ label {
 
 .svt-list,
 .network-list {
+    margin: 0 0 20px 0;
+}
+
+.svt-pages {
+    display: flex;
+    justify-content: space-between;
     margin: 0 0 50px 0;
+    align-self: stretch;
+}
+
+.svt-pages-buttons {
+
+}
+
+.svt-pages-count {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 0 5px;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+
+.svt-pages-info {
+    font-style: italic;
 }
 
 .table-svt,

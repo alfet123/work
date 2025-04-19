@@ -6,7 +6,7 @@ if (isset($itemId)) {
 
 	$title = 'Подключение '.$networkItem['network_id'];
 
-	includeTemplate('html_begin', ['title' => $title, 'menu' => $menu, 'current' => '']);
+	includeTemplate('html_begin', ['title' => $title, 'menu' => $appMenu, 'current' => '']);
 
 	includeTemplate('network_item', ['networkItem' => $networkItem]);
 
@@ -18,7 +18,7 @@ if (isset($itemId)) {
 
 	$networkList = DataBase::instance()->getNetworkList();
 
-	includeTemplate('html_begin', ['title' => $title, 'menu' => $menu, 'current' => '/network']);
+	includeTemplate('html_begin', ['title' => $title, 'menu' => $appMenu, 'current' => '/network']);
 
 	includeTemplate('network_list', ['networkList' => $networkList]);
 

@@ -49,7 +49,7 @@ function dataFiltering($data)
 // функция выводит шаблон из заданного файла
 function includeTemplate($template, $data = [])
 {
-    $file = $GLOBALS['templatesPath'].'/'.$template.'.php';
+    $file = $GLOBALS['appTemplatesPath'].'/'.$template.'.php';
 
     $result = "";
 

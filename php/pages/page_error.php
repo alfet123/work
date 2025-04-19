@@ -2,7 +2,7 @@
 
 $title = 'Ошибка';
 
-includeTemplate('html_begin', ['title' => $title, 'menu' => $menu]);
+includeTemplate('html_begin', ['title' => $title, 'menu' => $appMenu]);
 
 includeTemplate('error', ['text' => 'Невозможно отобразить страницу']);
 

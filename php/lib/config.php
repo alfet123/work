@@ -1,21 +1,23 @@
 <?php
 
-$pagesPath = 'pages';
-$templatesPath = 'templates';
+$appPagesPath = 'pages';
+$appTemplatesPath = 'templates';
 
-$pageError = 'page_error';
-$pageDefault = 'page_main';
+$appPageError = 'page_error';
+$appPageDefault = 'page_main';
 
-$pages = [
+$appPages = [
     'svt' => 'page_svt',
     'network' => 'page_network',
     'task' => 'page_task',
     'test' => 'page_test'
 ];
 
-$menu = [
+$appMenu = [
     '/' => 'Главная',
     '/svt' => 'Компьютеры',
     '/network' => 'Сеть',
     '/task' => 'Заявки'
 ];
+
+$limit = 20;

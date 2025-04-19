@@ -32,4 +32,53 @@
     item.addEventListener('click', selectRow);
   });
 
+/***************************************/
+/***  Общее для обработчиков кнопок  ***/
+/***************************************/
+
+  // Найти форму #svt-filter
+  var formSvtFilter = document.querySelector('form#svt-filter');
+
+  // Найти поле ввода #page_current
+  var inputPageCurrent = document.querySelector('input#page_current');
+
+/*************************************/
+/***  Обработчик для кнопок формы  ***/
+/*************************************/
+
+  var buttonSubmit = document.querySelector('button#submit');
+  //var buttonReset = document.querySelector('button#reset');
+
+  var clickSubmitButton = function(event) {
+    inputPageCurrent.value = 1;
+    formSvtFilter.submit();
+  };
+
+  //var clickResetButton = function(event) {
+    //inputPageCurrent.value = event.currentTarget.value;
+    //formSvtFilter.submit();
+  //};
+
+  buttonSubmit.addEventListener('click', clickSubmitButton);
+  //buttonReset.addEventListener('click', clickResetButton);
+
+/*****************************************/
+/***  Обработчик для кнопок пагинации  ***/
+/*****************************************/
+
+  var buttonFirst = document.querySelector('button#first');
+  var buttonPrev = document.querySelector('button#prev');
+  var buttonNext = document.querySelector('button#next');
+  var buttonLast = document.querySelector('button#last');
+
+  var clickPagesButton = function(event) {
+    inputPageCurrent.value = event.currentTarget.value;
+    formSvtFilter.submit();
+  };
+
+  buttonFirst.addEventListener('click', clickPagesButton);
+  buttonPrev.addEventListener('click', clickPagesButton);
+  buttonNext.addEventListener('click', clickPagesButton);
+  buttonLast.addEventListener('click', clickPagesButton);
+
 })();

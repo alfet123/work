@@ -28,10 +28,7 @@ $tableSvt = [
     </pre>
     </div>-->
 
-    <div class="form-element">
-    <label>svtCount</label>
-    <div><?=$svtCount;?></div>
-    </div>
+    <input hidden readonly type="text" id="page_current" name="page_current" value="<?=$svtPages['current'];?>">
 
     <div class="form-element">
     <label for="build_id">Здание</label>
@@ -70,7 +67,7 @@ $tableSvt = [
 
     <div class="form-element">
     <label>&nbsp;</label>
-    <button type="submit">Найти</button>
+    <button type="button" id="submit">Найти</button>
     </div>
 
     <div>
@@ -102,6 +99,22 @@ $tableSvt = [
 <?php endforeach; ?>
 
 </table>
+
+</section>
+
+<section class="svt  svt-pages">
+
+    <div class="svt-pages-buttons">
+        <button type="button" id="first"<?=($svtPages['current'] == 1) ? ' disabled' : ' value="1"';?>>Первая</button>
+        <button type="button" id="prev"<?=($svtPages['current'] == 1) ? ' disabled' : ' value="'.$svtPages['prev'].'"';?>>Назад</button>
+        <div class="svt-pages-count"><?=$svtPages['current'];?>&nbsp;&nbsp;/&nbsp;&nbsp;<?=$svtPages['total'];?></div>
+        <button type="button" id="next"<?=($svtPages['current'] == $svtPages['total']) ? ' disabled' : ' value="'.$svtPages['next'].'"';?>>Вперед</button>
+        <button type="button" id="last"<?=($svtPages['current'] == $svtPages['total']) ? ' disabled' : ' value="'.$svtPages['total'].'"';?>>Последняя</button>
+    </div>
+
+    <div class="svt-pages-info">
+        <?=$svtPages['showFrom'];?>&nbsp;...&nbsp;<?=$svtPages['showTo'];?>&nbsp;&nbsp;/&nbsp;&nbsp;<?=$svtCount;?>
+    </div>
 
 </section>
 

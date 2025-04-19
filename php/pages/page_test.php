@@ -12,7 +12,7 @@ switch ($testName) {
         $segments = explode('/', trim($url, '/'));
         $method = $_SERVER['REQUEST_METHOD'];
         $title = 'Тестовая страница';
-        includeTemplate('html_begin', ['title' => $title, 'menu' => $menu]);
+        includeTemplate('html_begin', ['title' => $title, 'menu' => $appMenu]);
         includeTemplate('test_url', ['url' => $url, 'segments' => $segments, 'method' => $method]);
         break;
 
@@ -26,13 +26,13 @@ switch ($testName) {
             }
         }
         $title = 'Свободные ID';
-        includeTemplate('html_begin', ['title' => $title, 'menu' => $menu]);
+        includeTemplate('html_begin', ['title' => $title, 'menu' => $appMenu]);
         includeTemplate('test_info', ['infoHead' => $title, 'infoData' => $idFree]);
         break;
 
     default:
         $title = 'Ошибка';
-        includeTemplate('html_begin', ['title' => $title, 'menu' => $menu]);
+        includeTemplate('html_begin', ['title' => $title, 'menu' => $appMenu]);
         includeTemplate('error', ['text' => 'Невозможно отобразить страницу']);
 }
 

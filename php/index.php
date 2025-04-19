@@ -23,18 +23,18 @@ if (isset($addressParts[1]) && !empty($addressParts[1])) {
 
 if (isset($pageName)) {
 
-    if (array_key_exists($pageName, $pages)){
+    if (array_key_exists($pageName, $appPages)){
 
-        require $pagesPath.'/'.$pages[$pageName].'.php';
+        require $appPagesPath.'/'.$appPages[$pageName].'.php';
 
     } else {
 
-        require $pagesPath.'/'.$pageError.'.php';
+        require $appPagesPath.'/'.$appPageError.'.php';
 
     }
 
 } else {
 
-    require $pagesPath.'/'.$pageDefault.'.php';
+    require $appPagesPath.'/'.$appPageDefault.'.php';
 
 }
