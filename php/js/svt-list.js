@@ -37,7 +37,7 @@
 /***************************************/
 
   // Найти форму #svt-filter
-  var formSvtFilter = document.querySelector('form#svt-filter');
+  var formSvtFilter = document.querySelector('form#svt_filter');
 
   // Найти поле ввода #page_current
   var inputPageCurrent = document.querySelector('input#page_current');
@@ -46,10 +46,10 @@
 /***  Обработчик для кнопок формы  ***/
 /*************************************/
 
-  var buttonSubmit = document.querySelector('button#submit');
-  //var buttonReset = document.querySelector('button#reset');
+  var buttonSubmit = document.querySelector('button#form_submit');
+  //var buttonReset = document.querySelector('button#form_reset');
 
-  var clickSubmitButton = function(event) {
+  var clickSubmitButton = function() {
     inputPageCurrent.value = 1;
     formSvtFilter.submit();
   };
@@ -66,10 +66,10 @@
 /***  Обработчик для кнопок пагинации  ***/
 /*****************************************/
 
-  var buttonFirst = document.querySelector('button#first');
-  var buttonPrev = document.querySelector('button#prev');
-  var buttonNext = document.querySelector('button#next');
-  var buttonLast = document.querySelector('button#last');
+  var buttonFirst = document.querySelector('button#page_first');
+  var buttonPrev = document.querySelector('button#page_prev');
+  var buttonNext = document.querySelector('button#page_next');
+  var buttonLast = document.querySelector('button#page_last');
 
   var clickPagesButton = function(event) {
     inputPageCurrent.value = event.currentTarget.value;
