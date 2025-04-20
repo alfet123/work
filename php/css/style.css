@@ -59,9 +59,6 @@ button:disabled {
 
 .page-header {
     padding: 20px;
-/*    min-height: 20px;*/
-/*    background-color: #ccc;*/
-/*    border-bottom: 1px solid #aaa;*/
 }
 
 .menu {
@@ -70,14 +67,8 @@ button:disabled {
 }
 
 .menu-item {
-/*    margin: 0 5px;
-    padding: 2px 10px;*/
     margin: 0 10px;
     padding: 0;
-/*    color: #444;
-    background-color: #fff;
-    border: 1px solid #aaa;
-    border-radius: 6px;*/
     color: #000;
     font-size: 14px;
     cursor: pointer;
@@ -89,8 +80,6 @@ button:disabled {
 .menu-item:hover {
     color: blue;
     text-decoration: underline;
-/*    border: 1px solid #abc;
-    box-shadow: 0 0 5px 2px #cde;*/
     background-color: #fff;
     box-shadow: 0 0 10px 2px #aaa;
 }
@@ -127,7 +116,6 @@ button:disabled {
 .page-footer {
     display: none;
     padding: 20px;
-/*    min-height: 20px;*/
     background-color: #ccc;
     border-top: 1px solid #bbb;
 }
@@ -138,6 +126,10 @@ button:disabled {
 
 .form-element {
     margin-right: 10px;
+}
+
+.form-element-last {
+    margin-right: 0;
 }
 
 .bg-pale-yellow {
@@ -172,6 +164,9 @@ button:disabled {
 
 .svt-list,
 .network-list {
+    display: flex;
+    justify-content: center;
+    align-self: stretch;
     margin: 0 0 20px 0;
 }
 
@@ -194,6 +189,7 @@ button:disabled {
     border-radius: 3px;
 }
 
+.empty-result,
 .svt-pages-info {
     font-style: italic;
 }

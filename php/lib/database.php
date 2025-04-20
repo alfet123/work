@@ -146,6 +146,26 @@ class DataBase {
         return $type;
     }
 
+    // Возвращает список моделей СВТ
+    public function getModelList($typeId)
+    {
+        $model = [];
+
+        $query  = "select * ";
+        $query .= "from model ";
+        $query .= "where type_id = '".$typeId."' ";
+        $query .= "order by name";
+
+        if ($result = mysqli_query($this->link, $query)) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $model[$row['id']] = $row;
+            }
+            mysqli_free_result($result);
+        }
+
+        return $model;
+    }
+
 /*************/
 /***  SVT  ***/
 /*************/
@@ -160,8 +180,20 @@ class DataBase {
                 'field' => 'build_id',
                 'operator' => 'equal'
             ],
+            'floor_id' => [
+                'field' => 'floor_id',
+                'operator' => 'equal'
+            ],
+            'room_id' => [
+                'field' => 'room_id',
+                'operator' => 'equal'
+            ],
             'type_id' => [
                 'field' => 'type_id',
+                'operator' => 'equal'
+            ],
+            'model_id' => [
+                'field' => 'model_id',
                 'operator' => 'equal'
             ],
             'svt_number' => [

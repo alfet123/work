@@ -21,6 +21,10 @@ if (isset($addressParts[1]) && !empty($addressParts[1])) {
     }
 }
 
+if (isset($funcName) && !empty($funcName) && isset($addressParts[2]) && is_numeric($addressParts[2])) {
+    $itemId = intval($addressParts[2]);
+}
+
 if (isset($pageName)) {
 
     if (array_key_exists($pageName, $appPages)){

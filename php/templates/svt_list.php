@@ -22,17 +22,11 @@ $tableSvt = [
 <section class="svt  svt-filter">
 <form action="/svt" method="post" id="svt_filter">
 
-    <!--<div class="form-element">
-    <pre style="font-size: 10px; background-color: lightgray;">
-        <?=print_r($_POST);?>
-    </pre>
-    </div>-->
-
     <input hidden readonly type="text" id="page_current" name="page_current" value="<?=$svtPages['current'];?>">
 
     <div class="form-element">
     <label for="build_id">Здание</label>
-    <select name="build_id" id="build_id">
+    <select class="svt-filter-select" name="build_id" id="build_id">
         <option value="" hidden disabled<?=(empty($currentBuildId))?" selected":"";?>>&nbsp;</option>
         <?php foreach ($buildList as $key => $value): ?>
             <option value="<?=$key;?>"<?=($key==$currentBuildId)?" selected":"";?>><?=$value['name'];?></option>
@@ -41,8 +35,28 @@ $tableSvt = [
     </div>
 
     <div class="form-element">
+    <label for="floor_id">Этаж</label>
+    <select class="svt-filter-select" name="floor_id" id="floor_id">
+        <option value="" hidden disabled<?=(empty($currentFloorId))?" selected":"";?>>&nbsp;</option>
+        <?php foreach ($floorList as $key => $value): ?>
+            <option value="<?=$key;?>"<?=($key==$currentFloorId)?" selected":"";?>><?=$value['name'];?></option>
+        <?php endforeach; ?>
+    </select>
+    </div>
+
+    <div class="form-element">
+    <label for="room_id">Кабинет</label>
+    <select class="svt-filter-select" name="room_id" id="room_id">
+        <option value="" hidden disabled<?=(empty($currentRoomId))?" selected":"";?>>&nbsp;</option>
+        <?php foreach ($roomList as $key => $value): ?>
+            <option value="<?=$key;?>"<?=($key==$currentRoomId)?" selected":"";?>><?=trim($value['number']." ".$value['name']);?></option>
+        <?php endforeach; ?>
+    </select>
+    </div>
+
+    <div class="form-element">
     <label for="type_id">Тип</label>
-    <select name="type_id" id="type_id">
+    <select class="svt-filter-select" name="type_id" id="type_id">
         <option value="" hidden disabled<?=(empty($currentTypeId))?" selected":"";?>>&nbsp;</option>
         <?php foreach ($typeList as $key => $value): ?>
             <option value="<?=$key;?>"<?=($key==$currentTypeId)?" selected":"";?>><?=$value['name'];?></option>
@@ -51,18 +65,28 @@ $tableSvt = [
     </div>
 
     <div class="form-element">
+    <label for="model_id">Модель</label>
+    <select class="svt-filter-select" name="model_id" id="model_id">
+        <option value="" hidden disabled<?=(empty($currentModelId))?" selected":"";?>>&nbsp;</option>
+        <?php foreach ($modelList as $key => $value): ?>
+            <option value="<?=$key;?>"<?=($key==$currentModelId)?" selected":"";?>><?=$value['name'];?></option>
+        <?php endforeach; ?>
+    </select>
+    </div>
+
+    <div class="form-element">
     <label for="svt_number">№ ТК</label>
-    <input type="text" size="4" maxlength="8" id="svt_number" name="svt_number" value="<?=$svtFilter['svt_number'];?>">
+    <input class="svt-filter-text" type="text" size="4" maxlength="8" id="svt_number" name="svt_number" value="<?=$svtFilter['svt_number'];?>">
     </div>
 
     <div class="form-element">
     <label for="svt_serial">Серийный номер</label>
-    <input type="text" size="16" maxlength="32" id="svt_serial" name="svt_serial" value="<?=$svtFilter['svt_serial'];?>">
+    <input class="svt-filter-text" type="text" size="16" maxlength="32" id="svt_serial" name="svt_serial" value="<?=$svtFilter['svt_serial'];?>">
     </div>
 
     <div class="form-element">
     <label for="svt_inv">Инвентарный номер</label>
-    <input type="text" size="12" maxlength="16" id="svt_inv" name="svt_inv" value="<?=$svtFilter['svt_inv'];?>">
+    <input class="svt-filter-text" type="text" size="12" maxlength="16" id="svt_inv" name="svt_inv" value="<?=$svtFilter['svt_inv'];?>">
     </div>
 
     <div class="form-element">
@@ -70,7 +94,7 @@ $tableSvt = [
     <button type="submit" id="form_submit" name="form_submit">Найти</button>
     </div>
 
-    <div>
+    <div class="form-element  form-element-last">
     <label>&nbsp;</label>
     <button type="reset" id="form_reset" name="form_reset">Очистить</button>
     </div>
@@ -83,20 +107,26 @@ $tableSvt = [
 <table class="table-svt">
 
     <tr class="tr-head">
-        <th class="svt-id">ID</th>
     <?php foreach ($tableSvt as $key => $value): ?>
         <th><?=$value;?></th>
     <?php endforeach; ?>
     </tr>
 
+<?php if ($svtCount > 0): ?>
+
 <?php foreach ($svtList as $svt): ?>
     <tr class="tr-item<?=(empty($svt['status_class']))?"":" ".$svt['status_class'];?>" id="<?=$svt['svt_id'];?>">
-        <td class="svt-id"><a href="/svt/<?=$svt['svt_id'];?>"><?=$svt['svt_id'];?></a></td>
     <?php foreach ($tableSvt as $key => $value): ?>
         <td><?=$svt[$key];?></td>
     <?php endforeach; ?>
     </tr>
 <?php endforeach; ?>
+
+<?php else: ?>
+
+    <tr class="empty-result"><td colspan="<?=count($tableSvt);?>">Нет записей для данных условий отбора.</td></tr>
+
+<?php endif; ?>
 
 </table>
 

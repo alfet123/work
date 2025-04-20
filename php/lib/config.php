@@ -10,7 +10,8 @@ $appPages = [
     'svt' => 'page_svt',
     'network' => 'page_network',
     'task' => 'page_task',
-    'test' => 'page_test'
+    'test' => 'page_test',
+    'get' => 'page_get'
 ];
 
 $appMenu = [

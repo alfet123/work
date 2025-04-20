@@ -30,7 +30,6 @@ $tableNetwork = [
 <table class="table-network">
 
     <tr class="tr-head">
-        <th class="network-id">ID</th>
     <?php foreach ($tableNetwork as $key => $value): ?>
         <th><?=$value;?></th>
     <?php endforeach; ?>
@@ -38,7 +37,6 @@ $tableNetwork = [
 
 <?php foreach ($networkList as $network): ?>
     <tr class="tr-item" id="<?=$network['id'];?>">
-        <td class="network-id"><a href="/network/<?=$network['id'];?>"><?=$network['id'];?></a></td>
     <?php foreach ($tableNetwork as $key => $value): ?>
         <td><?=$network[$key];?></td>
     <?php endforeach; ?>
