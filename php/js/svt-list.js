@@ -1,6 +1,8 @@
 (function() {
 
-// Функция для вывода элементов выпадающего списка
+/*********************************************************/
+/***  Функция для вывода элементов выпадающего списка  ***/
+/*********************************************************/
 
 function renderSelectList(data, target, clear=[]) {
   var clearList = [target];
@@ -29,30 +31,6 @@ function renderSelectList(data, target, clear=[]) {
     target.innerHTML += '<option value="' + item.id + '">' + name + '</option>';
   });
 }
-
-// Найти таблицу
-
-  var tableSvt = document.querySelector('table.table-svt');
-
-  if (tableSvt === null) {
-    return 0;
-  }
-
-// Установить обработчик выбора строки
-
-  var tableRows = tableSvt.querySelectorAll('tr.tr-item');
-
-  if (tableRows.length === 0) {
-    return 0;
-  }
-
-  var selectRow = function(event) {
-    window.location.href = window.location.origin+"/svt/"+event.currentTarget.id;
-  };
-
-  tableRows.forEach((item) => {
-    item.addEventListener('click', selectRow);
-  });
 
 /***************************************/
 /***  Общее для обработчиков кнопок  ***/
@@ -175,6 +153,28 @@ var changeType = function(event) {
   xhr.send();
 };
 selectType.addEventListener('change', changeType);
+
+/******************************************/
+/***  Обработчик выбора строки таблицы  ***/
+/******************************************/
+
+var tableSvt = document.querySelector('table.table-svt');
+if (tableSvt === null) {
+  return 0;
+}
+
+var tableRows = tableSvt.querySelectorAll('tr.tr-item');
+if (tableRows.length === 0) {
+  return 0;
+}
+
+var selectRow = function(event) {
+  window.location.href = window.location.origin + "/svt/" + event.currentTarget.id;
+};
+
+tableRows.forEach((item) => {
+  item.addEventListener('click', selectRow);
+});
 
 /*****************************************/
 /***  Обработчик для кнопок пагинации  ***/

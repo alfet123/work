@@ -135,8 +135,8 @@ $tableSvt = [
 <section class="svt  svt-pages">
 
     <div class="svt-pages-buttons">
-        <button type="button" id="page_first"<?=($svtPages['current'] == 1) ? ' disabled' : ' value="1"';?>>Первая</button>
-        <button type="button" id="page_prev"<?=($svtPages['current'] == 1) ? ' disabled' : ' value="'.$svtPages['prev'].'"';?>>Назад</button>
+        <button type="button" id="page_first"<?=($svtPages['current'] < 2) ? ' disabled' : ' value="1"';?>>Первая</button>
+        <button type="button" id="page_prev"<?=($svtPages['current'] < 2) ? ' disabled' : ' value="'.$svtPages['prev'].'"';?>>Назад</button>
         <div class="svt-pages-count"><?=$svtPages['current'];?>&nbsp;&nbsp;/&nbsp;&nbsp;<?=$svtPages['total'];?></div>
         <button type="button" id="page_next"<?=($svtPages['current'] == $svtPages['total']) ? ' disabled' : ' value="'.$svtPages['next'].'"';?>>Вперед</button>
         <button type="button" id="page_last"<?=($svtPages['current'] == $svtPages['total']) ? ' disabled' : ' value="'.$svtPages['total'].'"';?>>Последняя</button>

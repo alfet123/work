@@ -19,25 +19,14 @@ if (isset($itemId)) {
 	// Данные из формы фильтрации
 	$svtFilter = getPostData();
 
-	// Тестирование
-//	$svtFilter['build_id'] = 1;
-//	$svtFilter['floor_id'] = 1;
-//	$svtFilter['room_id'] = 276;
-//	$svtFilter['type_id'] = 4;
-//	$svtFilter['model_id'] = 13;
-
-//echo "<pre>svtFilter&nbsp;";
-//print_r($svtFilter);
-//echo "</pre>";
-
-	// Справочники
-
+	// Выбранный ID из выпадающих списков
 	$currentBuildId = (isset($svtFilter['build_id'])) ? $svtFilter['build_id'] : "";
 	$currentFloorId = (isset($svtFilter['floor_id'])) ? $svtFilter['floor_id'] : "";
 	$currentRoomId = (isset($svtFilter['room_id'])) ? $svtFilter['room_id'] : "";
 	$currentTypeId = (isset($svtFilter['type_id'])) ? $svtFilter['type_id'] : "";
 	$currentModelId = (isset($svtFilter['model_id'])) ? $svtFilter['model_id'] : "";
 
+	// Справочники
 	$buildList = DataBase::instance()->getBuildList();
 	$floorList = DataBase::instance()->getFloorList($currentBuildId);
 	$roomList = DataBase::instance()->getRoomList($currentFloorId);
