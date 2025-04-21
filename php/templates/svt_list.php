@@ -29,7 +29,7 @@ $tableSvt = [
     <select class="svt-filter-select" name="build_id" id="build_id">
         <option value="" hidden disabled<?=(empty($currentBuildId))?" selected":"";?>>&nbsp;</option>
         <?php foreach ($buildList as $key => $value): ?>
-            <option value="<?=$key;?>"<?=($key==$currentBuildId)?" selected":"";?>><?=$value['name'];?></option>
+            <option value="<?=$value['id'];?>"<?=($value['id']==$currentBuildId)?" selected":"";?>><?=$value['name'];?></option>
         <?php endforeach; ?>
     </select>
     </div>
@@ -39,7 +39,7 @@ $tableSvt = [
     <select class="svt-filter-select" name="floor_id" id="floor_id">
         <option value="" hidden disabled<?=(empty($currentFloorId))?" selected":"";?>>&nbsp;</option>
         <?php foreach ($floorList as $key => $value): ?>
-            <option value="<?=$key;?>"<?=($key==$currentFloorId)?" selected":"";?>><?=$value['name'];?></option>
+            <option value="<?=$value['id'];?>"<?=($value['id']==$currentFloorId)?" selected":"";?>><?=$value['name'];?></option>
         <?php endforeach; ?>
     </select>
     </div>
@@ -49,7 +49,7 @@ $tableSvt = [
     <select class="svt-filter-select" name="room_id" id="room_id">
         <option value="" hidden disabled<?=(empty($currentRoomId))?" selected":"";?>>&nbsp;</option>
         <?php foreach ($roomList as $key => $value): ?>
-            <option value="<?=$key;?>"<?=($key==$currentRoomId)?" selected":"";?>><?=trim($value['number']." ".$value['name']);?></option>
+            <option value="<?=$value['id'];?>"<?=($value['id']==$currentRoomId)?" selected":"";?>><?=trim($value['number']." ".$value['name']);?></option>
         <?php endforeach; ?>
     </select>
     </div>
@@ -59,7 +59,7 @@ $tableSvt = [
     <select class="svt-filter-select" name="type_id" id="type_id">
         <option value="" hidden disabled<?=(empty($currentTypeId))?" selected":"";?>>&nbsp;</option>
         <?php foreach ($typeList as $key => $value): ?>
-            <option value="<?=$key;?>"<?=($key==$currentTypeId)?" selected":"";?>><?=$value['name'];?></option>
+            <option value="<?=$value['id'];?>"<?=($value['id']==$currentTypeId)?" selected":"";?>><?=$value['name'];?></option>
         <?php endforeach; ?>
     </select>
     </div>
@@ -69,7 +69,7 @@ $tableSvt = [
     <select class="svt-filter-select" name="model_id" id="model_id">
         <option value="" hidden disabled<?=(empty($currentModelId))?" selected":"";?>>&nbsp;</option>
         <?php foreach ($modelList as $key => $value): ?>
-            <option value="<?=$key;?>"<?=($key==$currentModelId)?" selected":"";?>><?=$value['name'];?></option>
+            <option value="<?=$value['id'];?>"<?=($value['id']==$currentModelId)?" selected":"";?>><?=$value['name'];?></option>
         <?php endforeach; ?>
     </select>
     </div>

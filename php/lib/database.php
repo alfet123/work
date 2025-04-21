@@ -78,8 +78,10 @@ class DataBase {
         $query .= "order by sort";
 
         if ($result = mysqli_query($this->link, $query)) {
+            $key = 1;
             while ($row = mysqli_fetch_assoc($result)) {
-                $build[$row['id']] = $row;
+                $build[$key] = $row;
+                $key++;
             }
             mysqli_free_result($result);
         }
@@ -98,8 +100,10 @@ class DataBase {
         $query .= "order by number";
 
         if ($result = mysqli_query($this->link, $query)) {
+            $key = 1;
             while ($row = mysqli_fetch_assoc($result)) {
-                $floor[$row['id']] = $row;
+                $floor[$key] = $row;
+                $key++;
             }
             mysqli_free_result($result);
         }
@@ -118,8 +122,10 @@ class DataBase {
         $query .= "order by sort, number";
 
         if ($result = mysqli_query($this->link, $query)) {
+            $key = 1;
             while ($row = mysqli_fetch_assoc($result)) {
-                $room[$row['id']] = $row;
+                $room[$key] = $row;
+                $key++;
             }
             mysqli_free_result($result);
         }
@@ -137,8 +143,10 @@ class DataBase {
         $query .= "order by sort";
 
         if ($result = mysqli_query($this->link, $query)) {
+            $key = 1;
             while ($row = mysqli_fetch_assoc($result)) {
-                $type[$row['id']] = $row;
+                $type[$key] = $row;
+                $key++;
             }
             mysqli_free_result($result);
         }
@@ -157,8 +165,10 @@ class DataBase {
         $query .= "order by name";
 
         if ($result = mysqli_query($this->link, $query)) {
+            $key = 1;
             while ($row = mysqli_fetch_assoc($result)) {
-                $model[$row['id']] = $row;
+                $model[$key] = $row;
+                $key++;
             }
             mysqli_free_result($result);
         }
