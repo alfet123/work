@@ -28,6 +28,7 @@ SELECT
 
 	`model`.`id` AS 'model_id',
 	`model`.`name` AS 'model_name',
+	`model`.`description` AS 'model_description',
 
 	`status`.`id` AS 'status_id',
 	`status`.`name` AS 'status_name',

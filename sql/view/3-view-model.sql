@@ -7,7 +7,8 @@ AS
 SELECT
 	`model`.`id` AS 'id',
 	`type`.`name` AS 'type',
-	`model`.`name` AS 'model'
+	`model`.`name` AS 'name',
+	`model`.`description` AS 'description'
 
 FROM `model`
 
