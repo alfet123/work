@@ -48,6 +48,7 @@ CREATE TABLE `model` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Идентификатор',
   `type_id` int UNSIGNED NOT NULL COMMENT 'Тип',
   `name` varchar(64) NOT NULL COMMENT 'Название',
+  `description` varchar(64) NOT NULL COMMENT 'Описание',
   FOREIGN KEY (`type_id`) REFERENCES `type`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Модель';
 

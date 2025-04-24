@@ -117,7 +117,7 @@ $tableSvt = [
 <?php foreach ($svtList as $svt): ?>
     <tr class="tr-item<?=(empty($svt['status_class']))?"":" ".$svt['status_class'];?>" id="<?=$svt['svt_id'];?>">
     <?php foreach ($tableSvt as $key => $value): ?>
-        <td><?=$svt[$key];?></td>
+        <td><?=($key == 'room_number') ? trim($svt['room_number']." ".$svt['room_name']) : $svt[$key];?></td>
     <?php endforeach; ?>
     </tr>
 <?php endforeach; ?>
