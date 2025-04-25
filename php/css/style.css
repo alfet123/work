@@ -110,7 +110,7 @@ button:disabled {
 }
 
 .page-content-list {
-
+    /*position: relative;*/
 }
 
 .page-footer {
@@ -138,6 +138,37 @@ button:disabled {
 
 .bg-pale-red {
     background-color: #fcc;
+}
+
+/*************/
+/*** Modal ***/
+/*************/
+
+.wrapper-modal {
+    display: none;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.wrapper-modal-visible {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    min-width: 800px;
+    min-height: 600px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px 2px #222;
 }
 
 /**************************/

@@ -32,34 +32,54 @@ function renderSelectList(data, target, clear=[]) {
   });
 }
 
+/*************************************/
+/***  Функции для модального окна  ***/
+/*************************************/
+
+const wrapperModal = document.querySelector('div.wrapper-modal');
+const modalData = document.querySelector('div.modal-data');
+const buttonModalClose = document.querySelector('button#modal-close');
+
+const renderModal = function(svtId) {
+  modalData.innerHTML = "Изменение элемента " + svtId;
+  wrapperModal.classList.add('wrapper-modal-visible');
+}
+
+const closeModal = function() {
+  modalData.innerHTML = "";
+  wrapperModal.classList.remove('wrapper-modal-visible');
+}
+
+buttonModalClose.addEventListener('click', closeModal);
+
 /***************************************/
 /***  Общее для обработчиков кнопок  ***/
 /***************************************/
 
   // Форма #svt-filter
-  var formSvtFilter = document.querySelector('form#svt_filter');
+  const formSvtFilter = document.querySelector('form#svt_filter');
 
   // Поле ввода #page_current
-  var inputPageCurrent = document.querySelector('input#page_current');
+  const inputPageCurrent = document.querySelector('input#page_current');
 
 /*************************************/
 /***  Обработчик для кнопок формы  ***/
 /*************************************/
 
-  var buttonSubmit = formSvtFilter.querySelector('button#form_submit');
-  var buttonReset = formSvtFilter.querySelector('button#form_reset');
+  const buttonSubmit = formSvtFilter.querySelector('button#form_submit');
+  const buttonReset = formSvtFilter.querySelector('button#form_reset');
 
-  var inputSvtFilter = formSvtFilter.querySelectorAll('input.svt-filter-text');
-  var selectSvtFilter = formSvtFilter.querySelectorAll('select.svt-filter-select');
+  const inputSvtFilter = formSvtFilter.querySelectorAll('input.svt-filter-text');
+  const selectSvtFilter = formSvtFilter.querySelectorAll('select.svt-filter-select');
 
   // Отправка формы
-  var clickSubmitButton = function() {
+  const clickSubmitButton = function() {
     inputPageCurrent.value = 1;
     formSvtFilter.submit();
   };
 
   // Очистка формы
-  var clickResetButton = function() {
+  const clickResetButton = function() {
     inputSvtFilter.forEach((input) => {
       input.defaultValue = "";
       input.value = "";
@@ -88,14 +108,14 @@ function renderSelectList(data, target, clear=[]) {
 /***  Обработчики для выпадающих списков  ***/
 /********************************************/
 
-var selectBuild = formSvtFilter.querySelector('select[id="build_id"]');
-var selectFloor = formSvtFilter.querySelector('select[id="floor_id"]');
-var selectRoom = formSvtFilter.querySelector('select[id="room_id"]');
-var selectType = formSvtFilter.querySelector('select[id="type_id"]');
-var selectModel = formSvtFilter.querySelector('select[id="model_id"]');
+const selectBuild = formSvtFilter.querySelector('select[id="build_id"]');
+const selectFloor = formSvtFilter.querySelector('select[id="floor_id"]');
+const selectRoom = formSvtFilter.querySelector('select[id="room_id"]');
+const selectType = formSvtFilter.querySelector('select[id="type_id"]');
+const selectModel = formSvtFilter.querySelector('select[id="model_id"]');
 
 // Выбор здания, загрузка этажей
-var changeBuild = function(event) {
+const changeBuild = function(event) {
   const requestURL = `get/floor/` + event.target.value;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', requestURL);
@@ -115,7 +135,7 @@ var changeBuild = function(event) {
 selectBuild.addEventListener('change', changeBuild);
 
 // Выбор этажа, загрузка кабинетов
-var changeFloor = function(event) {
+const changeFloor = function(event) {
   const requestURL = `get/room/` + event.target.value;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', requestURL);
@@ -135,7 +155,7 @@ var changeFloor = function(event) {
 selectFloor.addEventListener('change', changeFloor);
 
 // Выбор типа, загрузка моделей
-var changeType = function(event) {
+const changeType = function(event) {
   const requestURL = `get/model/` + event.target.value;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', requestURL);
@@ -158,18 +178,22 @@ selectType.addEventListener('change', changeType);
 /***  Обработчик выбора строки таблицы  ***/
 /******************************************/
 
-var tableSvt = document.querySelector('table.table-svt');
+const tableSvt = document.querySelector('table.table-svt');
 if (tableSvt === null) {
   return 0;
 }
 
-var tableRows = tableSvt.querySelectorAll('tr.tr-item');
+const tableRows = tableSvt.querySelectorAll('tr.tr-item');
 if (tableRows.length === 0) {
   return 0;
 }
 
-var selectRow = function(event) {
-  window.location.href = window.location.origin + "/svt/" + event.currentTarget.id;
+//const sectionModal = document.querySelector('div.wrapper-modal');
+
+const selectRow = function(event) {
+//  window.location.href = window.location.origin + "/svt/" + event.currentTarget.id;
+//  sectionModal.classList.add('wrapper-modal-visible');
+  renderModal(event.currentTarget.id);
 };
 
 tableRows.forEach((item) => {
@@ -180,12 +204,12 @@ tableRows.forEach((item) => {
 /***  Обработчик для кнопок пагинации  ***/
 /*****************************************/
 
-  var buttonFirst = document.querySelector('button#page_first');
-  var buttonPrev = document.querySelector('button#page_prev');
-  var buttonNext = document.querySelector('button#page_next');
-  var buttonLast = document.querySelector('button#page_last');
+  const buttonFirst = document.querySelector('button#page_first');
+  const buttonPrev = document.querySelector('button#page_prev');
+  const buttonNext = document.querySelector('button#page_next');
+  const buttonLast = document.querySelector('button#page_last');
 
-  var clickPagesButton = function(event) {
+  const clickPagesButton = function(event) {
     inputPageCurrent.value = event.currentTarget.value;
     formSvtFilter.submit();
   };
