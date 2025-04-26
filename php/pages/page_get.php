@@ -4,23 +4,35 @@ if (isset($funcName) && isset($itemId)) {
 
     switch ($funcName) {
 
-        case 'floor':
-            $selectList = DataBase::instance()->getFloorList($itemId);
+        case 'svt':
+            $data = DataBase::instance()->getSvtById($itemId);
             break;
 
+        case 'build':
+            $data = DataBase::instance()->getBuildList();
+            break;
+
+        case 'floor':
+            $data = DataBase::instance()->getFloorList($itemId);
+            break;
+    
         case 'room':
-            $selectList = DataBase::instance()->getRoomList($itemId);
+            $data = DataBase::instance()->getRoomList($itemId);
+            break;
+
+        case 'type':
+            $data = DataBase::instance()->getTypeList();
             break;
 
         case 'model':
-            $selectList = DataBase::instance()->getModelList($itemId);
+            $data = DataBase::instance()->getModelList($itemId);
             break;
-                                        
+    
         default:
-            $selectList = [];
+            $data = [];
 
     }
 
-    echo json_encode($selectList);
+    echo json_encode($data);
 
 }

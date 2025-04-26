@@ -325,9 +325,7 @@ class DataBase {
         $query .= "limit 1";
 
         if ($result = mysqli_query($this->link, $query)) {
-            if ($row = mysqli_fetch_assoc($result)) {
-                $svt = $row;
-            }
+            $svt = mysqli_fetch_assoc($result);
             mysqli_free_result($result);
         }
 
@@ -339,7 +337,7 @@ class DataBase {
     {
         $svtId = [];
 
-        $query  = "select * ";
+        $query  = "select id ";
         $query .= "from svt ";
         $query .= "order by id";
 
@@ -351,6 +349,24 @@ class DataBase {
         }
 
         return $svtId;
+    }
+
+    // Обновляет данные по СВТ
+    public function updateSvt($svtData)
+    {
+        return;
+//        $svt = [];
+
+        $query  = "update svt ";
+        $query .= "set ";
+        $query .= "where id = '".$svtData['id']."'";
+
+        if ($result = mysqli_query($this->link, $query)) {
+            //$svt = mysqli_fetch_assoc($result);
+            mysqli_free_result($result);
+        }
+
+//        return $svt;
     }
 
 /*****************/

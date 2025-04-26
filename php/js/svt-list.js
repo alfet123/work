@@ -4,13 +4,13 @@
 /***  Функция для вывода элементов выпадающего списка  ***/
 /*********************************************************/
 
-function renderSelectList(data, target, clear=[]) {
+function renderSelectList(data, target, emptyOption=false, clear=[]) {
   var clearList = [target];
   if (clear.length) {
     clearList = clear;
   }
   clearList.forEach((item) => {
-    item.innerHTML = '<option value="" hidden disabled selected>&nbsp;</option>';
+    item.innerHTML = (emptyOption) ? '<option value="" hidden disabled selected>&nbsp;</option>' : '';
   });
   // Старый способ
 //  for (var key in data) {
@@ -36,21 +36,34 @@ function renderSelectList(data, target, clear=[]) {
 /***  Функции для модального окна  ***/
 /*************************************/
 
-const wrapperModal = document.querySelector('div.wrapper-modal');
-const modalData = document.querySelector('div.modal-data');
-const buttonModalClose = document.querySelector('button#modal-close');
+const modalWrapper = document.querySelector('div.wrapper-modal');
+const modalSection = document.querySelector('section.modal');
 
-const renderModal = function(svtId) {
-  modalData.innerHTML = "Изменение элемента " + svtId;
-  wrapperModal.classList.add('wrapper-modal-visible');
+const modalData = modalSection.querySelector('div.modal-data');
+const modalBuildId = modalSection.querySelector('select#modal_build_id');
+const modalFloorId = modalSection.querySelector('select#modal_floor_id');
+const modalRoomId = modalSection.querySelector('select#modal_room_id');
+const modalTypeId = modalSection.querySelector('select#modal_type_id');
+const modalModelId = modalSection.querySelector('select#modal_model_id');
+const modalSvtNumber = modalSection.querySelector('select#modal_svt_number');
+const modalSvtSerial = modalSection.querySelector('select#modal_svt_serial');
+const modalSvtInv = modalSection.querySelector('select#modal_svt_inv');
+
+const modalButtonSave = modalSection.querySelector('button#modal-button-save');
+const modalButtonClose = modalSection.querySelector('button#modal-button-close');
+
+const renderModal = function($svtData) {
+//  modalData.innerHTML = "Изменение элемента " + svtId + modalData.innerHTML;
+  modalData.innerHTML = "<pre>" + $svtData + "</pre>";
+  modalWrapper.classList.add('wrapper-modal-visible');
 }
 
 const closeModal = function() {
   modalData.innerHTML = "";
-  wrapperModal.classList.remove('wrapper-modal-visible');
+  modalWrapper.classList.remove('wrapper-modal-visible');
 }
 
-buttonModalClose.addEventListener('click', closeModal);
+modalButtonClose.addEventListener('click', closeModal);
 
 /***************************************/
 /***  Общее для обработчиков кнопок  ***/
@@ -191,10 +204,28 @@ if (tableRows.length === 0) {
 //const sectionModal = document.querySelector('div.wrapper-modal');
 
 const selectRow = function(event) {
-//  window.location.href = window.location.origin + "/svt/" + event.currentTarget.id;
-//  sectionModal.classList.add('wrapper-modal-visible');
-  renderModal(event.currentTarget.id);
+  const requestURL = `get/svt/` + event.currentTarget.id;
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', requestURL);
+  xhr.onload = () => {
+    if (xhr.status !== 200) {
+      console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+      return;
+    }
+    renderModal(xhr.response);
+//    const data = JSON.parse(xhr.response);
+//    renderModal(data);
+  };
+  xhr.onerror = () => {
+    console.log(`Ошибка при выполнении запроса`);
+  };
+  xhr.send();
 };
+
+//const selectRow = function(event) {
+//  window.location.href = window.location.origin + "/svt/" + event.currentTarget.id;
+//  renderModal(event.currentTarget.id);
+//};
 
 tableRows.forEach((item) => {
   item.addEventListener('click', selectRow);
