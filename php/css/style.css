@@ -180,7 +180,7 @@ button:disabled {
 }
 
 .modal-data {
-
+    /*word-break: break-all;*/
 }
 
 .modal-data-element {

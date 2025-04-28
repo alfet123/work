@@ -54,7 +54,7 @@ const modalButtonClose = modalSection.querySelector('button#modal-button-close')
 
 const renderModal = function($svtData) {
 //  modalData.innerHTML = "Изменение элемента " + svtId + modalData.innerHTML;
-  modalData.innerHTML = "<pre>" + $svtData + "</pre>";
+  modalData.innerHTML = $svtData;
   modalWrapper.classList.add('wrapper-modal-visible');
 }
 
@@ -138,7 +138,7 @@ const changeBuild = function(event) {
       return;
     }
     const data = JSON.parse(xhr.response);
-    renderSelectList(data, selectFloor, [selectFloor, selectRoom]);
+    renderSelectList(data, selectFloor, true, [selectFloor, selectRoom]);
   };
   xhr.onerror = () => {
     console.log(`Ошибка при выполнении запроса`);
@@ -158,7 +158,7 @@ const changeFloor = function(event) {
       return;
     }
     const data = JSON.parse(xhr.response);
-    renderSelectList(data, selectRoom);
+    renderSelectList(data, selectRoom, true);
   };
   xhr.onerror = () => {
     console.log(`Ошибка при выполнении запроса`);
@@ -178,7 +178,7 @@ const changeType = function(event) {
       return;
     }
     const data = JSON.parse(xhr.response);
-    renderSelectList(data, selectModel);
+    renderSelectList(data, selectModel, true);
   };
   xhr.onerror = () => {
     console.log(`Ошибка при выполнении запроса`);
