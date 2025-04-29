@@ -1,11 +1,11 @@
 (function() {
 
 /**************************************************/
-/***  Функции для загрузки данных справочников  ***/
+/***  Функция для загрузки данных справочников  ***/
 /**************************************************/
 
-const loadBuild = function(currentId=null) {
-  const requestURL = `get/build/0/` + currentId;
+const loadSprav = function(element, tableName, filterId=null, currentId=null) {
+  const requestURL = `get/` + tableName + `/` + filterId + `/` + currentId;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', requestURL);
   xhr.onload = () => {
@@ -14,7 +14,7 @@ const loadBuild = function(currentId=null) {
       return null;
     }
     const data = JSON.parse(xhr.response);
-    renderSelectList(data, modalBuild);
+    renderSelectList(data, element);
   };
   xhr.onerror = () => {
     console.log(`Ошибка при выполнении запроса`);
@@ -48,7 +48,7 @@ function renderSelectList(data, target, emptyOption=false, clear=[]) {
   // ES8
   Object.values(data).forEach((item) => {
     var name = item.name;
-    if (target.name === 'room_id') {
+    if (target.name === 'room_id' || target.name === 'modal_room_id') {
       name = (item.number + ' ' + item.name).trim();
     }
     target.innerHTML += '<option value="' + item.id + '"' + item.selected + '>' + name + '</option>';
@@ -85,7 +85,11 @@ const renderModal = function($svtData) {
 //  modalData.innerHTML = $svtData;
   modalTitle.innerHTML = "Изменение элемента " + $svtData['svt_id'] + " - " + $svtData['type_name'] + " " + $svtData['model_name'] + ", s/n " + $svtData['svt_serial'];
 
-  loadBuild($svtData['build_id']);
+  loadSprav(modalBuild, 'build', null, $svtData['build_id']);
+  loadSprav(modalFloor, 'floor', $svtData['build_id'], $svtData['floor_id']);
+  loadSprav(modalRoom, 'room', $svtData['floor_id'], $svtData['room_id']);
+  loadSprav(modalType, 'type', null, $svtData['type_id']);
+  loadSprav(modalModel, 'model', $svtData['type_id'], $svtData['model_id']);
 
   modalSvtNumber.value = $svtData['svt_number'];
   modalSvtSerial.value = $svtData['svt_serial'];

@@ -34,7 +34,7 @@
 
     <div class="modal-data-element">
     <label for="modal_svt_number">№ ТК</label>
-    <input class="svt-filter-text" type="text" size="4" maxlength="8" id="modal_svt_number" name="modal_svt_number" value="">
+    <input class="svt-filter-text" type="text" size="8" maxlength="8" id="modal_svt_number" name="modal_svt_number" value="">
     </div>
 
     <div class="modal-data-element">
@@ -44,7 +44,7 @@
 
     <div class="modal-data-element">
     <label for="modal_svt_inv">Инвентарный номер</label>
-    <input class="svt-filter-text" type="text" size="12" maxlength="16" id="modal_svt_inv" name="modal_svt_inv" value="">
+    <input class="svt-filter-text" type="text" size="16" maxlength="16" id="modal_svt_inv" name="modal_svt_inv" value="">
     </div>
 
     <div class="modal-data-element">

@@ -1,6 +1,8 @@
 <?php
 
-if (isset($appFuncName) && isset($appItemId)) {
+$data = [];
+
+//if (isset($appFuncName) && isset($appItemId)) {
 
     switch ($appFuncName) {
 
@@ -28,11 +30,11 @@ if (isset($appFuncName) && isset($appItemId)) {
             $data = DataBase::instance()->getModelList($appItemId, $appCurrentId);
             break;
     
-        default:
-            $data = [];
+//        default:
+//            $data = [];
 
     }
 
     echo json_encode($data);
 
-}
+//}
