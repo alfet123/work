@@ -1,31 +1,31 @@
 <?php
 
-if (isset($funcName) && isset($itemId)) {
+if (isset($appFuncName) && isset($appItemId)) {
 
-    switch ($funcName) {
+    switch ($appFuncName) {
 
         case 'svt':
-            $data = DataBase::instance()->getSvtById($itemId);
+            $data = DataBase::instance()->getSvtById($appItemId);
             break;
 
         case 'build':
-            $data = DataBase::instance()->getBuildList();
+            $data = DataBase::instance()->getBuildList($appCurrentId);
             break;
 
         case 'floor':
-            $data = DataBase::instance()->getFloorList($itemId);
+            $data = DataBase::instance()->getFloorList($appItemId, $appCurrentId);
             break;
     
         case 'room':
-            $data = DataBase::instance()->getRoomList($itemId);
+            $data = DataBase::instance()->getRoomList($appItemId, $appCurrentId);
             break;
 
         case 'type':
-            $data = DataBase::instance()->getTypeList();
+            $data = DataBase::instance()->getTypeList($appCurrentId);
             break;
 
         case 'model':
-            $data = DataBase::instance()->getModelList($itemId);
+            $data = DataBase::instance()->getModelList($appItemId, $appCurrentId);
             break;
     
         default:

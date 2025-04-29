@@ -69,7 +69,7 @@ class DataBase {
 /***************/
 
     // Возвращает список зданий
-    public function getBuildList()
+    public function getBuildList($currentId=null)
     {
         $build = [];
 
@@ -81,6 +81,10 @@ class DataBase {
             $key = 1;
             while ($row = mysqli_fetch_assoc($result)) {
                 $build[$key] = $row;
+                $build[$key]['selected'] = '';
+                if (isset($currentId) && $currentId == $build[$key]['id']) {
+                    $build[$key]['selected'] = ' selected';
+                }
                 $key++;
             }
             mysqli_free_result($result);
@@ -90,7 +94,7 @@ class DataBase {
     }
 
     // Возвращает список этажей в здании
-    public function getFloorList($buildId)
+    public function getFloorList($buildId, $currentId=null)
     {
         $floor = [];
 
@@ -103,6 +107,10 @@ class DataBase {
             $key = 1;
             while ($row = mysqli_fetch_assoc($result)) {
                 $floor[$key] = $row;
+                $floor[$key]['selected'] = '';
+                if (isset($currentId) && $currentId == $floor[$key]['id']) {
+                    $floor[$key]['selected'] = ' selected';
+                }
                 $key++;
             }
             mysqli_free_result($result);
@@ -112,7 +120,7 @@ class DataBase {
     }
 
     // Возвращает список кабинетов на этаже
-    public function getRoomList($floorId)
+    public function getRoomList($floorId, $currentId=null)
     {
         $room = [];
 
@@ -125,6 +133,10 @@ class DataBase {
             $key = 1;
             while ($row = mysqli_fetch_assoc($result)) {
                 $room[$key] = $row;
+                $room[$key]['selected'] = '';
+                if (isset($currentId) && $currentId == $room[$key]['id']) {
+                    $room[$key]['selected'] = ' selected';
+                }
                 $key++;
             }
             mysqli_free_result($result);
@@ -134,7 +146,7 @@ class DataBase {
     }
 
     // Возвращает список типов СВТ
-    public function getTypeList()
+    public function getTypeList($currentId=null)
     {
         $type = [];
 
@@ -146,6 +158,10 @@ class DataBase {
             $key = 1;
             while ($row = mysqli_fetch_assoc($result)) {
                 $type[$key] = $row;
+                $type[$key]['selected'] = '';
+                if (isset($currentId) && $currentId == $type[$key]['id']) {
+                    $type[$key]['selected'] = ' selected';
+                }
                 $key++;
             }
             mysqli_free_result($result);
@@ -155,7 +171,7 @@ class DataBase {
     }
 
     // Возвращает список моделей СВТ
-    public function getModelList($typeId)
+    public function getModelList($typeId, $currentId=null)
     {
         $model = [];
 
@@ -168,6 +184,10 @@ class DataBase {
             $key = 1;
             while ($row = mysqli_fetch_assoc($result)) {
                 $model[$key] = $row;
+                $model[$key]['selected'] = '';
+                if (isset($currentId) && $currentId == $model[$key]['id']) {
+                    $model[$key]['selected'] = ' selected';
+                }
                 $key++;
             }
             mysqli_free_result($result);

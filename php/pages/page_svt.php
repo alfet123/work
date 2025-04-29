@@ -1,8 +1,8 @@
 <?php
 
-if (isset($itemId)) {
+if (isset($appItemId)) {
 
-	$svtItem = DataBase::instance()->getSvtById($itemId);
+	$svtItem = DataBase::instance()->getSvtById($appItemId);
 
 	$title = $svtItem['type_name'].' '.$svtItem['model_name'];
 

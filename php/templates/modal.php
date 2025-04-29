@@ -4,6 +4,10 @@
 <div class="modal-data">
 
     <div class="modal-data-element">
+        <span id="modal_title"></span>
+    </div>
+
+    <div class="modal-data-element">
     <label for="modal_build_id">Здание</label>
     <select class="svt-filter-select" name="modal_build_id" id="modal_build_id"></select>
     </div>
@@ -43,16 +47,21 @@
     <input class="svt-filter-text" type="text" size="12" maxlength="16" id="modal_svt_inv" name="modal_svt_inv" value="">
     </div>
 
+    <div class="modal-data-element">
+    <label for="modal_svt_comment">Примечание</label>
+    <input class="svt-filter-text" type="text" size="32" maxlength="64" id="modal_svt_comment" name="modal_svt_comment" value="">
+    </div>
+
 </div>
 
 <div class="modal-buttons">
 
     <div class="modal-buttons-element">
-    <button id="modal-button-save">Сохранить</button>
+    <button id="modal_button_save">Сохранить</button>
     </div>
 
     <div class="modal-buttons-element">
-    <button id="modal-button-close">Закрыть</button>
+    <button id="modal_button_close">Закрыть</button>
     </div>
 
 </div>
