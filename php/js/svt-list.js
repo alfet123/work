@@ -1,59 +1,49 @@
 (function() {
 
-/**************************************************/
-/***  Функция для загрузки данных справочников  ***/
-/**************************************************/
-
-const loadSprav = function(element, tableName, filterId=null, currentId=null) {
-  const requestURL = `get/` + tableName + `/` + filterId + `/` + currentId;
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', requestURL);
-  xhr.onload = () => {
-    if (xhr.status !== 200) {
-      console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
-      return null;
-    }
-    const data = JSON.parse(xhr.response);
-    renderSelectList(data, element);
-  };
-  xhr.onerror = () => {
-    console.log(`Ошибка при выполнении запроса`);
-    return null;
-  };
-  xhr.send();
-};
-
-/*********************************************************/
-/***  Функция для вывода элементов выпадающего списка  ***/
-/*********************************************************/
+/********************************************/
+/***  Вывод элементов выпадающего списка  ***/
+/********************************************/
 
 function renderSelectList(data, target, emptyOption=false, clear=[]) {
-  var clearList = [target];
+  let clearList = [target];
   if (clear.length) {
     clearList = clear;
   }
   clearList.forEach((item) => {
     item.innerHTML = (emptyOption) ? '<option value="" hidden disabled selected>&nbsp;</option>' : '';
   });
-  // Старый способ
-//  for (var key in data) {
-//    if (data.hasOwnProperty(key)) {
-//      target.innerHTML += '<option value="' + data[key].id + '">' + data[key].name + '</option>';
-//    }
-//  }
-  // ES6
-//  Object.keys(data).forEach((key) => {
-//    target.innerHTML += '<option value="' + data[key].id + '">' + data[key].name + '</option>';
-//  });
-  // ES8
   Object.values(data).forEach((item) => {
-    var name = item.name;
+    let name = item.name;
     if (target.name === 'room_id' || target.name === 'modal_room_id') {
       name = (item.number + ' ' + item.name).trim();
     }
     target.innerHTML += '<option value="' + item.id + '"' + item.selected + '>' + name + '</option>';
   });
 }
+
+/**************************************/
+/***  Загрузка данных справочников  ***/
+/**************************************/
+
+const loadSprav = function(element, tableName, filterId=null, currentId=null) {
+  //const requestURL = `get/` + tableName + `/` + filterId + `/` + currentId;
+  const requestURL = `get/${tableName}/${filterId}/${currentId}`;
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', requestURL);
+  xhr.onload = () => {
+    if (xhr.status !== 200) {
+      console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+      return;
+    }
+    const data = JSON.parse(xhr.response);
+    renderSelectList(data, element);
+  };
+  xhr.onerror = () => {
+    console.log(`Ошибка при выполнении запроса`);
+    return;
+  };
+  xhr.send();
+};
 
 /*************************************/
 /***  Функции для модального окна  ***/
@@ -81,8 +71,6 @@ const modalButtonSave = modalSection.querySelector('button#modal_button_save');
 const modalButtonClose = modalSection.querySelector('button#modal_button_close');
 
 const renderModal = function($svtData) {
-//  modalData.innerHTML = "Изменение элемента " + svtId + modalData.innerHTML;
-//  modalData.innerHTML = $svtData;
   modalTitle.innerHTML = "Изменение элемента " + $svtData['svt_id'] + " - " + $svtData['type_name'] + " " + $svtData['model_name'] + ", s/n " + $svtData['svt_serial'];
 
   loadSprav(modalBuild, 'build', null, $svtData['build_id']);
@@ -100,8 +88,22 @@ const renderModal = function($svtData) {
 }
 
 const closeModal = function() {
-//  modalData.innerHTML = "";
   modalTitle.innerHTML = "";
+
+  modalBuild.value = null;
+  modalBuild.innerHTML = "";
+
+  modalFloor.value = null;
+  modalFloor.innerHTML = "";
+
+  modalRoom.value = null;
+  modalRoom.innerHTML = "";
+
+  modalType.value = null;
+  modalType.innerHTML = "";
+
+  modalModel.value = null;
+  modalModel.innerHTML = "";
 
   modalSvtNumber.value = "";
   modalSvtSerial.value = "";
