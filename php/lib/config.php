@@ -4,7 +4,8 @@ $appPagesPath = 'pages';
 $appTemplatesPath = 'templates';
 
 $appPageError = 'page_error';
-$appPageDefault = 'page_main';
+//$appPageDefault = 'page_main';
+$appPageDefault = 'page_svt';
 
 $appPages = [
     'svt' => 'page_svt',
@@ -15,10 +16,10 @@ $appPages = [
 ];
 
 $appMenu = [
-    '/' => 'Главная',
-    '/svt' => 'Компьютеры',
-    '/network' => 'Сеть',
-    '/task' => 'Заявки'
+//    '/' => 'Главная',
+//    '/svt' => 'Компьютеры',
+//    '/network' => 'Сеть',
+//    '/task' => 'Заявки'
 ];
 
 $limit = 20;

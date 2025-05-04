@@ -3,8 +3,9 @@
 
 <div class="modal-data">
 
-    <div class="modal-data-element">
-        <span id="modal_title"></span>
+    <div class="modal-data-header">
+        <div class="modal-title" id="modal_title"></div>
+        <div class="modal-close">X</div>
     </div>
 
     <div class="modal-data-element">

@@ -10,6 +10,7 @@ function renderSelectList(data, target, emptyOption=false, clear=[]) {
     clearList = clear;
   }
   clearList.forEach((item) => {
+    item.setAttribute("disabled", "");
     item.innerHTML = (emptyOption) ? '<option value="" hidden disabled selected>&nbsp;</option>' : '';
   });
   Object.values(data).forEach((item) => {
@@ -19,6 +20,9 @@ function renderSelectList(data, target, emptyOption=false, clear=[]) {
     }
     target.innerHTML += '<option value="' + item.id + '"' + item.selected + '>' + name + '</option>';
   });
+  if (Object.entries(data).length) {
+    target.removeAttribute("disabled");
+  }
 }
 
 /**************************************/
@@ -49,12 +53,14 @@ const loadSprav = function(element, tableName, filterId=null, currentId=null) {
 /***  Функции для модального окна  ***/
 /*************************************/
 
+const documentHtml = document.querySelector('html');
+//const documentBody = document.querySelector('body');
+
 const modalWrapper = document.querySelector('div.wrapper-modal');
 const modalSection = document.querySelector('section.modal');
 
-//const modalData = modalSection.querySelector('div.modal-data');
-
-const modalTitle = modalSection.querySelector('span#modal_title');
+const modalTitle = modalSection.querySelector('div#modal_title');
+const modalClose = modalSection.querySelector('.modal-close');
 
 const modalBuild = modalSection.querySelector('select#modal_build_id');
 const modalFloor = modalSection.querySelector('select#modal_floor_id');
@@ -70,23 +76,28 @@ const modalSvtComment = modalSection.querySelector('input#modal_svt_comment');
 const modalButtonSave = modalSection.querySelector('button#modal_button_save');
 const modalButtonClose = modalSection.querySelector('button#modal_button_close');
 
-const renderModal = function($svtData) {
-  modalTitle.innerHTML = "Изменение элемента " + $svtData['svt_id'] + " - " + $svtData['type_name'] + " " + $svtData['model_name'] + ", s/n " + $svtData['svt_serial'];
+// Открыть модальное окно
+const renderModal = function(svtData) {
+  documentHtml.classList.add('scroll-disable');
+//  documentBody.classList.add('scroll-disable');
 
-  loadSprav(modalBuild, 'build', null, $svtData['build_id']);
-  loadSprav(modalFloor, 'floor', $svtData['build_id'], $svtData['floor_id']);
-  loadSprav(modalRoom, 'room', $svtData['floor_id'], $svtData['room_id']);
-  loadSprav(modalType, 'type', null, $svtData['type_id']);
-  loadSprav(modalModel, 'model', $svtData['type_id'], $svtData['model_id']);
+  modalTitle.innerHTML = `${svtData['svt_id']} - ${svtData['type_name']} ${svtData['model_name']} (${svtData['svt_serial']})`;
 
-  modalSvtNumber.value = $svtData['svt_number'];
-  modalSvtSerial.value = $svtData['svt_serial'];
-  modalSvtInv.value = $svtData['svt_inv'];
-  modalSvtComment.value = $svtData['svt_comment'];
+  loadSprav(modalBuild, 'build', null, svtData['build_id']);
+  loadSprav(modalFloor, 'floor', svtData['build_id'], svtData['floor_id']);
+  loadSprav(modalRoom, 'room', svtData['floor_id'], svtData['room_id']);
+  loadSprav(modalType, 'type', null, svtData['type_id']);
+  loadSprav(modalModel, 'model', svtData['type_id'], svtData['model_id']);
+
+  modalSvtNumber.value = svtData['svt_number'];
+  modalSvtSerial.value = svtData['svt_serial'];
+  modalSvtInv.value = svtData['svt_inv'];
+  modalSvtComment.value = svtData['svt_comment'];
 
   modalWrapper.classList.add('wrapper-modal-visible');
 }
 
+// Закрыть модальное окно
 const closeModal = function() {
   modalTitle.innerHTML = "";
 
@@ -111,8 +122,11 @@ const closeModal = function() {
   modalSvtComment.value = "";
 
   modalWrapper.classList.remove('wrapper-modal-visible');
+  documentHtml.classList.remove('scroll-disable');
+//  documentBody.classList.remove('scroll-disable');
 }
 
+modalClose.addEventListener('click', closeModal);
 modalButtonClose.addEventListener('click', closeModal);
 
 /***************************************/
@@ -143,18 +157,14 @@ const clickSubmitButton = function() {
 
 // Очистка формы
 const clickResetButton = function() {
-  inputSvtFilter.forEach((input) => {
+  window.location.href = "/";
+
+/*  inputSvtFilter.forEach((input) => {
     input.defaultValue = "";
     input.value = "";
   });
   selectSvtFilter.forEach((select) => {
-    // Старый способ
-//    Array.prototype.forEach.call(select.options, (option) => {
-//      option.selected = false;
-//      option.removeAttribute("selected");
-//    });
-    // ES6
-    for (var option of select.options) {
+    for (let option of select.options) {
       option.selected = false;
       option.removeAttribute("selected");
     }
@@ -162,7 +172,7 @@ const clickResetButton = function() {
     select.options[0].setAttribute("selected", "");
   });
 
-  clickSubmitButton();
+  clickSubmitButton();*/
 };
 
 buttonSubmit.addEventListener('click', clickSubmitButton);

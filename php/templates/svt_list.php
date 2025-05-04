@@ -20,7 +20,8 @@ $tableSvt = [
 <div class="wrapper">
 
 <section class="svt  svt-filter">
-<form action="/svt" method="post" id="svt_filter">
+<!--<form action="/svt" method="post" id="svt_filter">-->
+<form action="/" method="post" id="svt_filter">
 
     <input hidden readonly type="text" id="page_current" name="page_current" value="<?=$svtPages['current'];?>">
 
@@ -36,7 +37,7 @@ $tableSvt = [
 
     <div class="form-element">
     <label for="floor_id">Этаж</label>
-    <select class="svt-filter-select" name="floor_id" id="floor_id">
+    <select class="svt-filter-select" name="floor_id" id="floor_id"<?=count($floorList) ? "" : " disabled";?>>
         <option value="" hidden disabled<?=(empty($currentFloorId))?" selected":"";?>>&nbsp;</option>
         <?php foreach ($floorList as $key => $value): ?>
             <option value="<?=$value['id'];?>"<?=($value['id']==$currentFloorId)?" selected":"";?>><?=$value['name'];?></option>
@@ -46,7 +47,7 @@ $tableSvt = [
 
     <div class="form-element">
     <label for="room_id">Кабинет</label>
-    <select class="svt-filter-select" name="room_id" id="room_id">
+    <select class="svt-filter-select" name="room_id" id="room_id"<?=count($roomList) ? "" : " disabled";?>>
         <option value="" hidden disabled<?=(empty($currentRoomId))?" selected":"";?>>&nbsp;</option>
         <?php foreach ($roomList as $key => $value): ?>
             <option value="<?=$value['id'];?>"<?=($value['id']==$currentRoomId)?" selected":"";?>><?=trim($value['number']." ".$value['name']);?></option>
@@ -66,7 +67,7 @@ $tableSvt = [
 
     <div class="form-element">
     <label for="model_id">Модель</label>
-    <select class="svt-filter-select" name="model_id" id="model_id">
+    <select class="svt-filter-select" name="model_id" id="model_id"<?=count($modelList) ? "" : " disabled";?>>
         <option value="" hidden disabled<?=(empty($currentModelId))?" selected":"";?>>&nbsp;</option>
         <?php foreach ($modelList as $key => $value): ?>
             <option value="<?=$value['id'];?>"<?=($value['id']==$currentModelId)?" selected":"";?>><?=$value['name'];?></option>
@@ -76,7 +77,7 @@ $tableSvt = [
 
     <div class="form-element">
     <label for="svt_number">№ ТК</label>
-    <input class="svt-filter-text" type="text" size="4" maxlength="8" id="svt_number" name="svt_number" value="<?=$svtFilter['svt_number'];?>">
+    <input class="svt-filter-text" type="text" size="8" maxlength="8" id="svt_number" name="svt_number" value="<?=$svtFilter['svt_number'];?>">
     </div>
 
     <div class="form-element">

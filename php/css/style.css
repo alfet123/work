@@ -53,6 +53,10 @@ button:disabled {
     cursor: auto;
 }
 
+select {
+    min-width: 100px;
+}
+
 /*******************/
 /*** Page Global ***/
 /*******************/
@@ -125,6 +129,10 @@ button:disabled {
     display: none;
 }
 
+.scroll-disable {
+    overflow: hidden;
+}
+
 .form-element {
     margin-right: 10px;
 }
@@ -147,7 +155,7 @@ button:disabled {
 
 .wrapper-modal {
     display: none;
-    position: absolute;
+    position: fixed;
     background-color: rgba(0, 0, 0, 0.6);
     top: 0;
     left: 0;
@@ -169,8 +177,8 @@ button:disabled {
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
-    min-width: 800px;
-    min-height: 600px;
+    min-width: 600px;
+    min-height: 400px;
     max-width: 1820px;
     max-height: 900px;
     padding: 10px;
@@ -180,7 +188,32 @@ button:disabled {
 }
 
 .modal-data {
-    /*word-break: break-all;*/
+    margin-bottom: 20px;
+}
+
+.modal-data-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.modal-title {
+
+}
+
+.modal-close {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: #444;
+    background-color: #ddd;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    background-color: #ccc;
 }
 
 .modal-data-element {
