@@ -8,6 +8,10 @@
         <div class="modal-close">X</div>
     </div>
 
+    <form class="modal-form" action="" id="modal_form">
+
+    <input hidden readonly type="text" id="modal_svt_id" name="modal_svt_id" value="">
+
     <div class="modal-data-element">
     <label for="modal_build_id">Здание</label>
     <select class="svt-filter-select" name="modal_build_id" id="modal_build_id"></select>
@@ -53,12 +57,14 @@
     <input class="svt-filter-text" type="text" size="32" maxlength="64" id="modal_svt_comment" name="modal_svt_comment" value="">
     </div>
 
+    </form>
+
 </div>
 
 <div class="modal-buttons">
 
     <div class="modal-buttons-element">
-    <button id="modal_button_save">Сохранить</button>
+    <button id="modal_button_save" disabled="">Сохранить</button>
     </div>
 
     <div class="modal-buttons-element">

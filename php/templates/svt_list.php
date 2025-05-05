@@ -21,7 +21,7 @@ $tableSvt = [
 
 <section class="svt  svt-filter">
 <!--<form action="/svt" method="post" id="svt_filter">-->
-<form action="/" method="post" id="svt_filter">
+<form class="svt-filter-form" action="/" method="post" id="svt_filter">
 
     <input hidden readonly type="text" id="page_current" name="page_current" value="<?=$svtPages['current'];?>">
 

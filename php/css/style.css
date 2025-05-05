@@ -36,10 +36,6 @@ h1 {
     text-align: center;
 }
 
-form {
-    display: flex;
-}
-
 label {
     display: block;
     font-size: 10px;
@@ -216,6 +212,10 @@ select {
     background-color: #ccc;
 }
 
+.modal-form {
+
+}
+
 .modal-data-element {
     
 }
@@ -250,6 +250,10 @@ select {
 
 .svt-filter {
     padding-top: 5px;
+}
+
+.svt-filter-form {
+    display: flex;
 }
 
 .svt-list,

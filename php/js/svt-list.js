@@ -59,6 +59,8 @@ const documentHtml = document.querySelector('html');
 const modalWrapper = document.querySelector('div.wrapper-modal');
 const modalSection = document.querySelector('section.modal');
 
+const modalForm = modalSection.querySelector('form#modal_form');
+
 const modalTitle = modalSection.querySelector('div#modal_title');
 const modalClose = modalSection.querySelector('.modal-close');
 
@@ -68,6 +70,7 @@ const modalRoom = modalSection.querySelector('select#modal_room_id');
 const modalType = modalSection.querySelector('select#modal_type_id');
 const modalModel = modalSection.querySelector('select#modal_model_id');
 
+const modalSvtId = modalSection.querySelector('input#modal_svt_id');
 const modalSvtNumber = modalSection.querySelector('input#modal_svt_number');
 const modalSvtSerial = modalSection.querySelector('input#modal_svt_serial');
 const modalSvtInv = modalSection.querySelector('input#modal_svt_inv');
@@ -82,6 +85,8 @@ const renderModal = function(svtData) {
 //  documentBody.classList.add('scroll-disable');
 
   modalTitle.innerHTML = `${svtData['svt_id']} - ${svtData['type_name']} ${svtData['model_name']} (${svtData['svt_serial']})`;
+
+  modalSvtId.value = svtData['svt_id'];
 
   loadSprav(modalBuild, 'build', null, svtData['build_id']);
   loadSprav(modalFloor, 'floor', svtData['build_id'], svtData['floor_id']);
@@ -126,8 +131,15 @@ const closeModal = function() {
 //  documentBody.classList.remove('scroll-disable');
 }
 
+// Изменение данных формы
+const changeModalForm = function(event) {
+  console.log(event);
+}
+
 modalClose.addEventListener('click', closeModal);
 modalButtonClose.addEventListener('click', closeModal);
+
+modalForm.addEventListener('change', changeModalForm);
 
 /***************************************/
 /***  Общее для обработчиков кнопок  ***/
@@ -264,8 +276,9 @@ if (tableRows.length === 0) {
 
 //const sectionModal = document.querySelector('div.wrapper-modal');
 
+// Загрузка данных по заданному ID
 const selectRow = function(event) {
-  const requestURL = `get/svt/` + event.currentTarget.id;
+  const requestURL = `get/svt/${event.currentTarget.id}`;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', requestURL);
   xhr.onload = () => {
