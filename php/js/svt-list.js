@@ -1,5 +1,92 @@
 (function() {
 
+const documentHtml = document.querySelector('html');
+//const documentBody = document.querySelector('body');
+
+// Элементы формы фильтра
+const formSvtFilter = document.querySelector('form#svt_filter');
+const inputPageCurrent = document.querySelector('input#page_current');
+
+const selectBuild = formSvtFilter.querySelector('select#build_id');
+const selectFloor = formSvtFilter.querySelector('select#floor_id');
+const selectRoom = formSvtFilter.querySelector('select#room_id');
+const selectType = formSvtFilter.querySelector('select#type_id');
+const selectModel = formSvtFilter.querySelector('select#model_id');
+
+const buttonSubmit = formSvtFilter.querySelector('button#form_submit');
+const buttonReset = formSvtFilter.querySelector('button#form_reset');
+
+//const inputSvtFilter = formSvtFilter.querySelectorAll('input.svt-filter-text');
+//const selectSvtFilter = formSvtFilter.querySelectorAll('select.svt-filter-select');
+
+// Элементы таблицы
+const tableSvt = document.querySelector('table.table-svt');
+const tableRows = tableSvt.querySelectorAll('tr.tr-item');
+
+// Элементы блока пагинации
+const buttonFirst = document.querySelector('button#page_first');
+const buttonPrev = document.querySelector('button#page_prev');
+const buttonNext = document.querySelector('button#page_next');
+const buttonLast = document.querySelector('button#page_last');
+
+// Элементы модального окна
+const modalWrapper = document.querySelector('div.wrapper-modal');
+const modalSection = document.querySelector('section.modal');
+
+//const modalForm = modalSection.querySelector('form#modal_form');
+
+const modalTitle = modalSection.querySelector('div#modal_title');
+const modalClose = modalSection.querySelector('.modal-close');
+
+const modalBuild = modalSection.querySelector('select#modal_build_id');
+const modalFloor = modalSection.querySelector('select#modal_floor_id');
+const modalRoom = modalSection.querySelector('select#modal_room_id');
+const modalType = modalSection.querySelector('select#modal_type_id');
+const modalModel = modalSection.querySelector('select#modal_model_id');
+
+const modalSvtId = modalSection.querySelector('input#modal_svt_id');
+const modalSvtNumber = modalSection.querySelector('input#modal_svt_number');
+const modalSvtSerial = modalSection.querySelector('input#modal_svt_serial');
+const modalSvtInv = modalSection.querySelector('input#modal_svt_inv');
+const modalSvtComment = modalSection.querySelector('input#modal_svt_comment');
+
+//const modalButtonSave = modalSection.querySelector('button#modal_button_save');
+const modalButtonClose = modalSection.querySelector('button#modal_button_close');
+
+// Данные для обработчика выпадающих списков changeSelectValue
+const select = {
+  'build_id': {
+    'source': 'floor',
+    'target': selectFloor,
+    'clear': [selectFloor, selectRoom]
+  },
+  'floor_id': {
+    'source': 'room',
+    'target': selectRoom,
+    'clear': []
+  },
+  'type_id': {
+    'source': 'model',
+    'target': selectModel,
+    'clear': []
+  },
+  'modal_build_id': {
+    'source': 'floor',
+    'target': modalFloor,
+    'clear': [modalFloor, modalRoom]
+  },
+  'modal_floor_id': {
+    'source': 'room',
+    'target': modalRoom,
+    'clear': []
+  },
+  'modal_type_id': {
+    'source': 'model',
+    'target': modalModel,
+    'clear': []
+  }
+};
+
 /********************************************/
 /***  Вывод элементов выпадающего списка  ***/
 /********************************************/
@@ -18,7 +105,8 @@ function renderSelectList(data, target, emptyOption=false, clear=[]) {
     if (target.name === 'room_id' || target.name === 'modal_room_id') {
       name = (item.number + ' ' + item.name).trim();
     }
-    target.innerHTML += '<option value="' + item.id + '"' + item.selected + '>' + name + '</option>';
+    //target.innerHTML += '<option value="' + item.id + '"' + item.selected + '>' + name + '</option>';
+    target.innerHTML += `<option value="${item.id}"${item.selected}>${name}</option>`;
   });
   if (Object.entries(data).length) {
     target.removeAttribute("disabled");
@@ -30,7 +118,6 @@ function renderSelectList(data, target, emptyOption=false, clear=[]) {
 /**************************************/
 
 const loadSprav = function(element, tableName, filterId=null, currentId=null) {
-  //const requestURL = `get/` + tableName + `/` + filterId + `/` + currentId;
   const requestURL = `get/${tableName}/${filterId}/${currentId}`;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', requestURL);
@@ -52,32 +139,6 @@ const loadSprav = function(element, tableName, filterId=null, currentId=null) {
 /*************************************/
 /***  Функции для модального окна  ***/
 /*************************************/
-
-const documentHtml = document.querySelector('html');
-//const documentBody = document.querySelector('body');
-
-const modalWrapper = document.querySelector('div.wrapper-modal');
-const modalSection = document.querySelector('section.modal');
-
-const modalForm = modalSection.querySelector('form#modal_form');
-
-const modalTitle = modalSection.querySelector('div#modal_title');
-const modalClose = modalSection.querySelector('.modal-close');
-
-const modalBuild = modalSection.querySelector('select#modal_build_id');
-const modalFloor = modalSection.querySelector('select#modal_floor_id');
-const modalRoom = modalSection.querySelector('select#modal_room_id');
-const modalType = modalSection.querySelector('select#modal_type_id');
-const modalModel = modalSection.querySelector('select#modal_model_id');
-
-const modalSvtId = modalSection.querySelector('input#modal_svt_id');
-const modalSvtNumber = modalSection.querySelector('input#modal_svt_number');
-const modalSvtSerial = modalSection.querySelector('input#modal_svt_serial');
-const modalSvtInv = modalSection.querySelector('input#modal_svt_inv');
-const modalSvtComment = modalSection.querySelector('input#modal_svt_comment');
-
-const modalButtonSave = modalSection.querySelector('button#modal_button_save');
-const modalButtonClose = modalSection.querySelector('button#modal_button_close');
 
 // Открыть модальное окно
 const renderModal = function(svtData) {
@@ -131,35 +192,19 @@ const closeModal = function() {
 //  documentBody.classList.remove('scroll-disable');
 }
 
-// Изменение данных формы
-const changeModalForm = function(event) {
-  console.log(event);
-}
-
 modalClose.addEventListener('click', closeModal);
 modalButtonClose.addEventListener('click', closeModal);
 
-modalForm.addEventListener('change', changeModalForm);
+// Изменение данных формы
+//const changeModalForm = function(event) {
+//  console.log(`${event.target.name}: ${event.target.value}`);
+//}
 
-/***************************************/
-/***  Общее для обработчиков кнопок  ***/
-/***************************************/
+//modalForm.addEventListener('change', changeModalForm);
 
-// Форма #svt-filter
-const formSvtFilter = document.querySelector('form#svt_filter');
-
-// Поле ввода #page_current
-const inputPageCurrent = document.querySelector('input#page_current');
-
-/*************************************/
-/***  Обработчик для кнопок формы  ***/
-/*************************************/
-
-const buttonSubmit = formSvtFilter.querySelector('button#form_submit');
-const buttonReset = formSvtFilter.querySelector('button#form_reset');
-
-const inputSvtFilter = formSvtFilter.querySelectorAll('input.svt-filter-text');
-const selectSvtFilter = formSvtFilter.querySelectorAll('select.svt-filter-select');
+/*********************************************/
+/***  Обработчик для кнопок формы фильтра  ***/
+/*********************************************/
 
 // Отправка формы
 const clickSubmitButton = function() {
@@ -190,19 +235,14 @@ const clickResetButton = function() {
 buttonSubmit.addEventListener('click', clickSubmitButton);
 buttonReset.addEventListener('click', clickResetButton);
 
-/********************************************/
-/***  Обработчики для выпадающих списков  ***/
-/********************************************/
+/*******************************************/
+/***  Обработчик для выпадающих списков  ***/
+/*******************************************/
 
-const selectBuild = formSvtFilter.querySelector('select#build_id');
-const selectFloor = formSvtFilter.querySelector('select#floor_id');
-const selectRoom = formSvtFilter.querySelector('select#room_id');
-const selectType = formSvtFilter.querySelector('select#type_id');
-const selectModel = formSvtFilter.querySelector('select#model_id');
-
-// Выбор здания, загрузка этажей
-const changeBuild = function(event) {
-  const requestURL = `get/floor/` + event.target.value;
+// Обработчик выбора здания, этажа и типа
+const changeSelectValue = function(event) {
+  const selectName = select[event.target.name];
+  const requestURL = `get/${selectName.source}/${event.target.value}`;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', requestURL);
   xhr.onload = () => {
@@ -211,70 +251,25 @@ const changeBuild = function(event) {
       return;
     }
     const data = JSON.parse(xhr.response);
-    renderSelectList(data, selectFloor, true, [selectFloor, selectRoom]);
+    renderSelectList(data, selectName.target, true, selectName.clear);
   };
   xhr.onerror = () => {
     console.log(`Ошибка при выполнении запроса`);
   };
   xhr.send();
 };
-selectBuild.addEventListener('change', changeBuild);
 
-// Выбор этажа, загрузка кабинетов
-const changeFloor = function(event) {
-  const requestURL = `get/room/` + event.target.value;
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', requestURL);
-  xhr.onload = () => {
-    if (xhr.status !== 200) {
-      console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
-      return;
-    }
-    const data = JSON.parse(xhr.response);
-    renderSelectList(data, selectRoom, true);
-  };
-  xhr.onerror = () => {
-    console.log(`Ошибка при выполнении запроса`);
-  };
-  xhr.send();
-};
-selectFloor.addEventListener('change', changeFloor);
+selectBuild.addEventListener('change', changeSelectValue);
+selectFloor.addEventListener('change', changeSelectValue);
+selectType.addEventListener('change', changeSelectValue);
 
-// Выбор типа, загрузка моделей
-const changeType = function(event) {
-  const requestURL = `get/model/` + event.target.value;
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', requestURL);
-  xhr.onload = () => {
-    if (xhr.status !== 200) {
-      console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
-      return;
-    }
-    const data = JSON.parse(xhr.response);
-    renderSelectList(data, selectModel, true);
-  };
-  xhr.onerror = () => {
-    console.log(`Ошибка при выполнении запроса`);
-  };
-  xhr.send();
-};
-selectType.addEventListener('change', changeType);
+modalBuild.addEventListener('change', changeSelectValue);
+modalFloor.addEventListener('change', changeSelectValue);
+modalType.addEventListener('change', changeSelectValue);
 
 /******************************************/
 /***  Обработчик выбора строки таблицы  ***/
 /******************************************/
-
-const tableSvt = document.querySelector('table.table-svt');
-if (tableSvt === null) {
-  return 0;
-}
-
-const tableRows = tableSvt.querySelectorAll('tr.tr-item');
-if (tableRows.length === 0) {
-  return 0;
-}
-
-//const sectionModal = document.querySelector('div.wrapper-modal');
 
 // Загрузка данных по заданному ID
 const selectRow = function(event) {
@@ -296,8 +291,7 @@ const selectRow = function(event) {
 };
 
 //const selectRow = function(event) {
-//  window.location.href = window.location.origin + "/svt/" + event.currentTarget.id;
-//  renderModal(event.currentTarget.id);
+//  window.location.href = `/svt/${event.currentTarget.id}`;
 //};
 
 tableRows.forEach((item) => {
@@ -307,11 +301,6 @@ tableRows.forEach((item) => {
 /*****************************************/
 /***  Обработчик для кнопок пагинации  ***/
 /*****************************************/
-
-const buttonFirst = document.querySelector('button#page_first');
-const buttonPrev = document.querySelector('button#page_prev');
-const buttonNext = document.querySelector('button#page_next');
-const buttonLast = document.querySelector('button#page_last');
 
 const clickPagesButton = function(event) {
   inputPageCurrent.value = event.currentTarget.value;
