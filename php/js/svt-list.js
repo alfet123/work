@@ -50,7 +50,7 @@ const modalSvtSerial = modalSection.querySelector('input#modal_svt_serial');
 const modalSvtInv = modalSection.querySelector('input#modal_svt_inv');
 const modalSvtComment = modalSection.querySelector('input#modal_svt_comment');
 
-//const modalButtonSave = modalSection.querySelector('button#modal_button_save');
+const modalButtonSave = modalSection.querySelector('button#modal_button_save');
 const modalButtonClose = modalSection.querySelector('button#modal_button_close');
 
 // Данные для обработчика выпадающих списков changeSelectValue
@@ -86,6 +86,9 @@ const select = {
     'clear': []
   }
 };
+
+// Данные модального окна при открытии (для контроля изменений)
+const modalData = {};
 
 /********************************************/
 /***  Вывод элементов выпадающего списка  ***/
@@ -142,6 +145,17 @@ const loadSprav = function(element, tableName, filterId=null, currentId=null) {
 
 // Открыть модальное окно
 const renderModal = function(svtData) {
+
+  modalData.modal_build_id = svtData['build_id'];
+  modalData.modal_floor_id = svtData['floor_id'];
+  modalData.modal_room_id = svtData['room_id'];
+  modalData.modal_type_id = svtData['type_id'];
+  modalData.modal_model_id = svtData['model_id'];
+  modalData.modal_svt_number = svtData['svt_number'];
+  modalData.modal_svt_serial = svtData['svt_serial'];
+  modalData.modal_svt_inv = svtData['svt_inv'];
+  modalData.modal_svt_comment = svtData['svt_comment'];
+
   documentHtml.classList.add('scroll-disable');
 //  documentBody.classList.add('scroll-disable');
 
@@ -165,6 +179,9 @@ const renderModal = function(svtData) {
 
 // Закрыть модальное окно
 const closeModal = function() {
+
+  Object.keys(modalData).forEach(key => delete modalData[key]);
+
   modalTitle.innerHTML = "";
 
   modalBuild.value = null;
@@ -196,11 +213,20 @@ modalClose.addEventListener('click', closeModal);
 modalButtonClose.addEventListener('click', closeModal);
 
 // Изменение данных формы
-//const changeModalForm = function(event) {
-//  console.log(`${event.target.name}: ${event.target.value}`);
-//}
+const changeModalForm = function(event) {
+  console.log(`${event.target.name}: ${event.target.value} (${modalData[event.target.name]})`);
+}
 
-//modalForm.addEventListener('change', changeModalForm);
+modalBuild.addEventListener('change', changeModalForm);
+modalFloor.addEventListener('change', changeModalForm);
+modalRoom.addEventListener('change', changeModalForm);
+modalType.addEventListener('change', changeModalForm);
+modalModel.addEventListener('change', changeModalForm);
+
+modalSvtNumber.addEventListener('input', changeModalForm);
+modalSvtSerial.addEventListener('input', changeModalForm);
+modalSvtInv.addEventListener('input', changeModalForm);
+modalSvtComment.addEventListener('input', changeModalForm);
 
 /*********************************************/
 /***  Обработчик для кнопок формы фильтра  ***/

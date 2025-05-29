@@ -2,8 +2,8 @@
 
 $testName = 'url'; // default template value
 
-if (isset($funcName)) {
-    $testName = $funcName;
+if (isset($appFuncName)) {
+    $testName = $appFuncName;
 }
 
 switch ($testName) {
