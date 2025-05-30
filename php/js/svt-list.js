@@ -90,6 +90,49 @@ const select = {
 // Данные модального окна при открытии (для контроля изменений)
 const modalData = {};
 
+// Проверка заполнения обязательных полей
+const isEmpty = function() {
+  return modalBuild.value.trim().length === 0 ||
+         modalFloor.value.trim().length === 0 ||
+         modalRoom.value.trim().length === 0 ||
+         modalType.value.trim().length === 0 ||
+         modalModel.value.trim().length === 0 ||
+         modalSvtSerial.value.trim().length === 0;
+}
+
+const checkEmpty = function() {
+  if (isEmpty()) {
+    console.log("Есть пустые поля. Отключение кнопки.");
+    modalButtonSave.setAttribute("disabled", "");
+  } else {
+    console.log("Все поля заполнены. Кнопка активна.");
+    modalButtonSave.removeAttribute("disabled");
+  }
+}
+
+// Проверка измененных значений
+const isChanged = function() {
+/*  return modalBuild.value.trim() === 0 ||
+         modalFloor.value.trim() === 0 ||
+         modalRoom.value.trim() === 0 ||
+         modalType.value.trim() === 0 ||
+         modalModel.value.trim() === 0 ||
+         modalSvtNumber.value.trim() === 0 ||
+         modalSvtSerial.value.trim() === 0 ||
+         modalSvtInv.value.trim() === 0 ||
+         modalSvtComment.value.trim() === 0;*/       
+}
+
+const checkChanges = function() {
+/*  if (isChanged()) {
+    console.log("Есть измененные поля. Кнопка активна.");
+    modalButtonSave.setAttribute("disabled", "");
+  } else {
+    console.log("Нет изменений. Отключение кнопки.");
+    modalButtonSave.removeAttribute("disabled");
+  }*/
+}
+
 /********************************************/
 /***  Вывод элементов выпадающего списка  ***/
 /********************************************/
@@ -114,6 +157,8 @@ function renderSelectList(data, target, emptyOption=false, clear=[]) {
   if (Object.entries(data).length) {
     target.removeAttribute("disabled");
   }
+  checkEmpty();
+  checkChanges();
 }
 
 /**************************************/
@@ -138,6 +183,116 @@ const loadSprav = function(element, tableName, filterId=null, currentId=null) {
   };
   xhr.send();
 };
+
+/*********************************************/
+/***  Обработчик для кнопок формы фильтра  ***/
+/*********************************************/
+
+// Отправка формы
+const clickSubmitButton = function() {
+  inputPageCurrent.value = 1;
+  formSvtFilter.submit();
+};
+
+// Очистка формы
+const clickResetButton = function() {
+  window.location.href = "/";
+
+/*  inputSvtFilter.forEach((input) => {
+    input.defaultValue = "";
+    input.value = "";
+  });
+  selectSvtFilter.forEach((select) => {
+    for (let option of select.options) {
+      option.selected = false;
+      option.removeAttribute("selected");
+    }
+    select.options[0].selected = true;
+    select.options[0].setAttribute("selected", "");
+  });
+
+  clickSubmitButton();*/
+};
+
+buttonSubmit.addEventListener('click', clickSubmitButton);
+buttonReset.addEventListener('click', clickResetButton);
+
+/*******************************************/
+/***  Обработчик для выпадающих списков  ***/
+/*******************************************/
+
+// Обработчик выбора здания, этажа и типа
+const changeSelectValue = function(event) {
+  const selectName = select[event.target.name];
+  const requestURL = `get/${selectName.source}/${event.target.value}`;
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', requestURL);
+  xhr.onload = () => {
+    if (xhr.status !== 200) {
+      console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+      return;
+    }
+    const data = JSON.parse(xhr.response);
+    renderSelectList(data, selectName.target, true, selectName.clear);
+  };
+  xhr.onerror = () => {
+    console.log(`Ошибка при выполнении запроса`);
+  };
+  xhr.send();
+};
+
+selectBuild.addEventListener('change', changeSelectValue);
+selectFloor.addEventListener('change', changeSelectValue);
+selectType.addEventListener('change', changeSelectValue);
+
+//modalBuild.addEventListener('change', changeSelectValue);
+//modalFloor.addEventListener('change', changeSelectValue);
+//modalType.addEventListener('change', changeSelectValue);
+
+/******************************************/
+/***  Обработчик выбора строки таблицы  ***/
+/******************************************/
+
+// Загрузка данных по заданному ID
+const selectRow = function(event) {
+  const requestURL = `get/svt/${event.currentTarget.id}`;
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', requestURL);
+  xhr.onload = () => {
+    if (xhr.status !== 200) {
+      console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+      return;
+    }
+    const data = JSON.parse(xhr.response);
+    renderModal(data);
+  };
+  xhr.onerror = () => {
+    console.log(`Ошибка при выполнении запроса`);
+  };
+  xhr.send();
+};
+
+//const selectRow = function(event) {
+//  window.location.href = `/svt/${event.currentTarget.id}`;
+//};
+
+tableRows.forEach((item) => {
+  item.addEventListener('click', selectRow);
+});
+
+/*****************************************/
+/***  Обработчик для кнопок пагинации  ***/
+/*****************************************/
+
+const clickPagesButton = function(event) {
+  inputPageCurrent.value = event.currentTarget.value;
+  formSvtFilter.submit();
+};
+
+buttonFirst.addEventListener('click', clickPagesButton);
+buttonPrev.addEventListener('click', clickPagesButton);
+buttonNext.addEventListener('click', clickPagesButton);
+buttonLast.addEventListener('click', clickPagesButton);
 
 /*************************************/
 /***  Функции для модального окна  ***/
@@ -214,7 +369,19 @@ modalButtonClose.addEventListener('click', closeModal);
 
 // Изменение данных формы
 const changeModalForm = function(event) {
-  console.log(`${event.target.name}: ${event.target.value} (${modalData[event.target.name]})`);
+
+  if (event.target.name in select) {
+
+    changeSelectValue(event);
+
+  } else {
+
+    checkEmpty();
+    checkChanges();
+
+  }
+  
+//  console.log(`${event.target.name}: ${event.target.value} (${modalData[event.target.name]})`);
 }
 
 modalBuild.addEventListener('change', changeModalForm);
@@ -227,115 +394,5 @@ modalSvtNumber.addEventListener('input', changeModalForm);
 modalSvtSerial.addEventListener('input', changeModalForm);
 modalSvtInv.addEventListener('input', changeModalForm);
 modalSvtComment.addEventListener('input', changeModalForm);
-
-/*********************************************/
-/***  Обработчик для кнопок формы фильтра  ***/
-/*********************************************/
-
-// Отправка формы
-const clickSubmitButton = function() {
-  inputPageCurrent.value = 1;
-  formSvtFilter.submit();
-};
-
-// Очистка формы
-const clickResetButton = function() {
-  window.location.href = "/";
-
-/*  inputSvtFilter.forEach((input) => {
-    input.defaultValue = "";
-    input.value = "";
-  });
-  selectSvtFilter.forEach((select) => {
-    for (let option of select.options) {
-      option.selected = false;
-      option.removeAttribute("selected");
-    }
-    select.options[0].selected = true;
-    select.options[0].setAttribute("selected", "");
-  });
-
-  clickSubmitButton();*/
-};
-
-buttonSubmit.addEventListener('click', clickSubmitButton);
-buttonReset.addEventListener('click', clickResetButton);
-
-/*******************************************/
-/***  Обработчик для выпадающих списков  ***/
-/*******************************************/
-
-// Обработчик выбора здания, этажа и типа
-const changeSelectValue = function(event) {
-  const selectName = select[event.target.name];
-  const requestURL = `get/${selectName.source}/${event.target.value}`;
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', requestURL);
-  xhr.onload = () => {
-    if (xhr.status !== 200) {
-      console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
-      return;
-    }
-    const data = JSON.parse(xhr.response);
-    renderSelectList(data, selectName.target, true, selectName.clear);
-  };
-  xhr.onerror = () => {
-    console.log(`Ошибка при выполнении запроса`);
-  };
-  xhr.send();
-};
-
-selectBuild.addEventListener('change', changeSelectValue);
-selectFloor.addEventListener('change', changeSelectValue);
-selectType.addEventListener('change', changeSelectValue);
-
-modalBuild.addEventListener('change', changeSelectValue);
-modalFloor.addEventListener('change', changeSelectValue);
-modalType.addEventListener('change', changeSelectValue);
-
-/******************************************/
-/***  Обработчик выбора строки таблицы  ***/
-/******************************************/
-
-// Загрузка данных по заданному ID
-const selectRow = function(event) {
-  const requestURL = `get/svt/${event.currentTarget.id}`;
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', requestURL);
-  xhr.onload = () => {
-    if (xhr.status !== 200) {
-      console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
-      return;
-    }
-    const data = JSON.parse(xhr.response);
-    renderModal(data);
-  };
-  xhr.onerror = () => {
-    console.log(`Ошибка при выполнении запроса`);
-  };
-  xhr.send();
-};
-
-//const selectRow = function(event) {
-//  window.location.href = `/svt/${event.currentTarget.id}`;
-//};
-
-tableRows.forEach((item) => {
-  item.addEventListener('click', selectRow);
-});
-
-/*****************************************/
-/***  Обработчик для кнопок пагинации  ***/
-/*****************************************/
-
-const clickPagesButton = function(event) {
-  inputPageCurrent.value = event.currentTarget.value;
-  formSvtFilter.submit();
-};
-
-buttonFirst.addEventListener('click', clickPagesButton);
-buttonPrev.addEventListener('click', clickPagesButton);
-buttonNext.addEventListener('click', clickPagesButton);
-buttonLast.addEventListener('click', clickPagesButton);
 
 })();
