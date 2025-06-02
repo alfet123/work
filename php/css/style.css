@@ -36,6 +36,11 @@ h1 {
     text-align: center;
 }
 
+select.value_changed,
+input.value_changed {
+    box-shadow: 0 0 5px green ;
+}
+
 button {
     cursor: pointer;
 }

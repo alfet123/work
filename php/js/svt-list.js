@@ -90,6 +90,28 @@ const select = {
 // Данные модального окна при открытии (для контроля изменений)
 const modalData = {};
 
+const modalFormFields = [
+  {element: modalBuild, originalValue: modalData.modal_build_id},
+  {element: modalFloor, originalValue: modalData.modal_floor_id},
+  {element: modalRoom, originalValue: modalData.modal_room_id},
+  {element: modalType, originalValue: modalData.modal_type_id},
+  {element: modalModel, originalValue: modalData.modal_model_id},
+  {element: modalSvtNumber, originalValue: modalData.modal_svt_number},
+  {element: modalSvtSerial, originalValue: modalData.modal_svt_serial},
+  {element: modalSvtInv, originalValue: modalData.modal_svt_inv},
+  {element: modalSvtComment, originalValue: modalData.modal_svt_comment}
+];
+
+const checkChanged = function() {
+  modalFormFields.forEach(item => {
+    if (item.element.value.trim() !== item.originalValue) {
+      element.classList.add('value_changed');
+    } else {
+      element.classList.remove('value_changed');
+    }
+  });
+}
+
 // Проверка заполнения обязательных полей
 const isEmpty = function() {
   return modalBuild.value.trim().length === 0 ||
@@ -100,44 +122,36 @@ const isEmpty = function() {
          modalSvtSerial.value.trim().length === 0;
 }
 
-const checkEmpty = function() {
-  if (isEmpty()) {
-    console.log("Есть пустые поля. Отключение кнопки.");
-    modalButtonSave.setAttribute("disabled", "");
-  } else {
-    console.log("Все поля заполнены. Кнопка активна.");
-    modalButtonSave.removeAttribute("disabled");
-  }
-}
-
 // Проверка измененных значений
 const isChanged = function() {
-/*  return modalBuild.value.trim() === 0 ||
-         modalFloor.value.trim() === 0 ||
-         modalRoom.value.trim() === 0 ||
-         modalType.value.trim() === 0 ||
-         modalModel.value.trim() === 0 ||
-         modalSvtNumber.value.trim() === 0 ||
-         modalSvtSerial.value.trim() === 0 ||
-         modalSvtInv.value.trim() === 0 ||
-         modalSvtComment.value.trim() === 0;*/       
+  return modalBuild.value.trim() !== modalData.modal_build_id ||
+         modalFloor.value.trim() !== modalData.modal_floor_id ||
+         modalRoom.value.trim() !== modalData.modal_room_id ||
+         modalType.value.trim() !== modalData.modal_type_id ||
+         modalModel.value.trim() !== modalData.modal_model_id ||
+         modalSvtNumber.value.trim() !== modalData.modal_svt_number ||
+         modalSvtSerial.value.trim() !== modalData.modal_svt_serial ||
+         modalSvtInv.value.trim() !== modalData.modal_svt_inv ||
+         modalSvtComment.value.trim() !== modalData.modal_svt_comment;
 }
 
-const checkChanges = function() {
-/*  if (isChanged()) {
-    console.log("Есть измененные поля. Кнопка активна.");
-    modalButtonSave.setAttribute("disabled", "");
-  } else {
-    console.log("Нет изменений. Отключение кнопки.");
+const checkModalData = function() {
+
+  checkChanged();
+
+  if (!isEmpty() && isChanged()) {
     modalButtonSave.removeAttribute("disabled");
-  }*/
+  } else {
+    modalButtonSave.setAttribute("disabled", "");
+  }
+
 }
 
 /********************************************/
 /***  Вывод элементов выпадающего списка  ***/
 /********************************************/
 
-function renderSelectList(data, target, emptyOption=false, clear=[]) {
+function renderSelectList(data, target, emptyOption=false, clear=[], checkValues=false) {
   let clearList = [target];
   if (clear.length) {
     clearList = clear;
@@ -151,14 +165,14 @@ function renderSelectList(data, target, emptyOption=false, clear=[]) {
     if (target.name === 'room_id' || target.name === 'modal_room_id') {
       name = (item.number + ' ' + item.name).trim();
     }
-    //target.innerHTML += '<option value="' + item.id + '"' + item.selected + '>' + name + '</option>';
     target.innerHTML += `<option value="${item.id}"${item.selected}>${name}</option>`;
   });
   if (Object.entries(data).length) {
     target.removeAttribute("disabled");
   }
-  checkEmpty();
-  checkChanges();
+  if (checkValues) {
+    checkModalData();
+  }
 }
 
 /**************************************/
@@ -233,7 +247,7 @@ const changeSelectValue = function(event) {
       return;
     }
     const data = JSON.parse(xhr.response);
-    renderSelectList(data, selectName.target, true, selectName.clear);
+    renderSelectList(data, selectName.target, true, selectName.clear, true);
   };
   xhr.onerror = () => {
     console.log(`Ошибка при выполнении запроса`);
@@ -376,8 +390,7 @@ const changeModalForm = function(event) {
 
   } else {
 
-    checkEmpty();
-    checkChanges();
+    checkModalData();
 
   }
   
