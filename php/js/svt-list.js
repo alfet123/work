@@ -104,10 +104,10 @@ const modalFormFields = [
 
 const checkChanged = function() {
   modalFormFields.forEach(item => {
-    if (item.element.value.trim() !== item.originalValue) {
-      element.classList.add('value_changed');
+    if (item.element.value.trim() !== modalData[item.element.name]) {
+      item.element.classList.add('value_changed');
     } else {
-      element.classList.remove('value_changed');
+      item.element.classList.remove('value_changed');
     }
   });
 }

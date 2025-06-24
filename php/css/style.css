@@ -36,9 +36,14 @@ h1 {
     text-align: center;
 }
 
+input:focus {
+    outline: none;
+}
+
 select.value_changed,
 input.value_changed {
-    box-shadow: 0 0 5px green ;
+    background-color: #bfb;
+    border-color: #8f8;
 }
 
 button {
