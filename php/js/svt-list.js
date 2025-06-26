@@ -50,6 +50,7 @@ const modalSvtSerial = modalSection.querySelector('input#modal_svt_serial');
 const modalSvtInv = modalSection.querySelector('input#modal_svt_inv');
 const modalSvtComment = modalSection.querySelector('input#modal_svt_comment');
 
+const modalButtonReset = modalSection.querySelector('button#modal_button_reset');
 const modalButtonSave = modalSection.querySelector('button#modal_button_save');
 const modalButtonClose = modalSection.querySelector('button#modal_button_close');
 
@@ -91,25 +92,35 @@ const select = {
 const modalData = {};
 
 const modalFormFields = [
-  {element: modalBuild, originalValue: modalData.modal_build_id},
-  {element: modalFloor, originalValue: modalData.modal_floor_id},
-  {element: modalRoom, originalValue: modalData.modal_room_id},
-  {element: modalType, originalValue: modalData.modal_type_id},
-  {element: modalModel, originalValue: modalData.modal_model_id},
-  {element: modalSvtNumber, originalValue: modalData.modal_svt_number},
-  {element: modalSvtSerial, originalValue: modalData.modal_svt_serial},
-  {element: modalSvtInv, originalValue: modalData.modal_svt_inv},
-  {element: modalSvtComment, originalValue: modalData.modal_svt_comment}
+  {element: modalBuild},
+  {element: modalFloor},
+  {element: modalRoom},
+  {element: modalType},
+  {element: modalModel},
+  {element: modalSvtNumber},
+  {element: modalSvtSerial},
+  {element: modalSvtInv},
+  {element: modalSvtComment}
 ];
 
 const checkChanged = function() {
+
   modalFormFields.forEach(item => {
+
     if (item.element.value.trim() !== modalData[item.element.name]) {
       item.element.classList.add('value_changed');
     } else {
       item.element.classList.remove('value_changed');
     }
+
+    if (item.element.required && item.element.value.trim() === "") {
+      item.element.classList.add('value_required');
+    } else {
+      item.element.classList.remove('value_required');
+    }
+
   });
+
 }
 
 // Проверка заполнения обязательных полей
@@ -139,6 +150,14 @@ const checkModalData = function() {
 
   checkChanged();
 
+  // Управление кнопкой сброса (восстановления)
+  if (isEmpty() || isChanged()) {
+    modalButtonReset.removeAttribute("disabled");
+  } else {
+    modalButtonReset.setAttribute("disabled", "");
+  }
+
+  // Управление кнопкой сохранения
   if (!isEmpty() && isChanged()) {
     modalButtonSave.removeAttribute("disabled");
   } else {
@@ -332,16 +351,16 @@ const renderModal = function(svtData) {
 
   modalSvtId.value = svtData['svt_id'];
 
-  loadSprav(modalBuild, 'build', null, svtData['build_id']);
-  loadSprav(modalFloor, 'floor', svtData['build_id'], svtData['floor_id']);
-  loadSprav(modalRoom, 'room', svtData['floor_id'], svtData['room_id']);
-  loadSprav(modalType, 'type', null, svtData['type_id']);
-  loadSprav(modalModel, 'model', svtData['type_id'], svtData['model_id']);
+  loadSprav(modalBuild, 'build', null, modalData.modal_build_id);
+  loadSprav(modalFloor, 'floor', modalData.modal_build_id, modalData.modal_floor_id);
+  loadSprav(modalRoom, 'room', modalData.modal_floor_id, modalData.modal_room_id );
+  loadSprav(modalType, 'type', null, modalData.modal_type_id);
+  loadSprav(modalModel, 'model', modalData.modal_type_id, modalData.modal_model_id);
 
-  modalSvtNumber.value = svtData['svt_number'];
-  modalSvtSerial.value = svtData['svt_serial'];
-  modalSvtInv.value = svtData['svt_inv'];
-  modalSvtComment.value = svtData['svt_comment'];
+  modalSvtNumber.value = modalData.modal_svt_number;
+  modalSvtSerial.value = modalData.modal_svt_serial;
+  modalSvtInv.value = modalData.modal_svt_inv;
+  modalSvtComment.value = modalData.modal_svt_comment;
 
   modalWrapper.classList.add('wrapper-modal-visible');
 }
@@ -373,6 +392,24 @@ const closeModal = function() {
   modalSvtInv.value = "";
   modalSvtComment.value = "";
 
+  modalFormFields.forEach(item => {
+    item.element.classList.remove('value_changed');
+    item.element.classList.remove('value_required');
+  });
+
+  modalButtonReset.setAttribute("disabled", "");
+  modalButtonSave.setAttribute("disabled", "");
+
+  delete modalData.modal_build_id;
+  delete modalData.modal_floor_id;
+  delete modalData.modal_room_id;
+  delete modalData.modal_type_id;
+  delete modalData.modal_model_id;
+  delete modalData.modal_svt_number;
+  delete modalData.modal_svt_serial;
+  delete modalData.modal_svt_inv;
+  delete modalData.modal_svt_comment;
+
   modalWrapper.classList.remove('wrapper-modal-visible');
   documentHtml.classList.remove('scroll-disable');
 //  documentBody.classList.remove('scroll-disable');
@@ -380,6 +417,37 @@ const closeModal = function() {
 
 modalClose.addEventListener('click', closeModal);
 modalButtonClose.addEventListener('click', closeModal);
+
+// Сбросить (восстановить) исходные данные модального окна
+const resetModal = function() {
+  loadSprav(modalBuild, 'build', null, modalData.modal_build_id);
+  loadSprav(modalFloor, 'floor', modalData.modal_build_id, modalData.modal_floor_id);
+  loadSprav(modalRoom, 'room', modalData.modal_floor_id, modalData.modal_room_id );
+  loadSprav(modalType, 'type', null, modalData.modal_type_id);
+  loadSprav(modalModel, 'model', modalData.modal_type_id, modalData.modal_model_id);
+
+  modalSvtNumber.value = modalData.modal_svt_number;
+  modalSvtSerial.value = modalData.modal_svt_serial;
+  modalSvtInv.value = modalData.modal_svt_inv;
+  modalSvtComment.value = modalData.modal_svt_comment;
+
+  modalFormFields.forEach(item => {
+    item.element.classList.remove('value_changed');
+    item.element.classList.remove('value_required');
+  });
+
+  modalButtonReset.setAttribute("disabled", "");
+  modalButtonSave.setAttribute("disabled", "");
+}
+
+modalButtonReset.addEventListener('click', resetModal);
+
+// Сохранить изменения модального окна
+const saveModal = function() {
+  console.log('Сохранение');
+}
+
+modalButtonSave.addEventListener('click', saveModal);
 
 // Изменение данных формы
 const changeModalForm = function(event) {

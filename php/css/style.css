@@ -46,6 +46,12 @@ input.value_changed {
     border-color: #8f8;
 }
 
+select.value_required,
+input.value_required {
+    background-color: #fbb;
+    border-color: #f88;
+}
+
 button {
     cursor: pointer;
 }
@@ -241,10 +247,23 @@ button:disabled {
 .modal-buttons {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.modal-buttons-section {
+    display: flex;
+    flex-direction: row;
     justify-content: flex-end;
 }
 
-.modal-buttons-element {
+.modal-buttons-section-left {
+    justify-content: flex-start;
+}
+.modal-buttons-section-right {
+    justify-content: flex-end;
+}
+
+.modal-buttons-section-right > .modal-buttons-element {
     margin-left: 10px;
 }
 
