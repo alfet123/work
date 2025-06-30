@@ -91,6 +91,8 @@ const select = {
 // Данные модального окна при открытии (для контроля изменений)
 const modalData = {};
 
+const modalChanges = {};
+
 const modalFormFields = [
   {element: modalBuild},
   {element: modalFloor},
@@ -108,8 +110,10 @@ const checkChanged = function() {
   modalFormFields.forEach(item => {
 
     if (item.element.value.trim() !== modalData[item.element.name]) {
+      modalChanges[item.element.name] = item.element.value.trim();
       item.element.classList.add('value_changed');
     } else {
+      delete modalChanges[item.element.name];
       item.element.classList.remove('value_changed');
     }
 
@@ -442,9 +446,38 @@ const resetModal = function() {
 
 modalButtonReset.addEventListener('click', resetModal);
 
+// Успешное сохранение данных
+const saveModalSuccess = function() {
+  closeModal();
+  formSvtFilter.submit();
+}
+
+// Запрос для сохранения изменений
+const saveChanges = function(tableName, id, newDataObject) {
+  const requestURL = `put/${tableName}/${id}`;
+  const xhr = new XMLHttpRequest();
+  xhr.open('PUT', requestURL);
+  xhr.onload = () => {
+    if (xhr.status !== 200) {
+      console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+      return;
+    }
+    const result = JSON.parse(xhr.response);
+    //console.log(result);
+    if (result.data_is_updated) {
+      saveModalSuccess();
+    }
+  };
+  xhr.onerror = () => {
+    console.log(`Ошибка при выполнении запроса`);
+    return;
+  };
+  xhr.send(JSON.stringify(newDataObject));
+};
+
 // Сохранить изменения модального окна
 const saveModal = function() {
-  console.log('Сохранение');
+  saveChanges('svt', modalSvtId.value, modalChanges);
 }
 
 modalButtonSave.addEventListener('click', saveModal);

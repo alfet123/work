@@ -12,7 +12,8 @@ $appPages = [
     'network' => 'page_network',
     'task' => 'page_task',
     'test' => 'page_test',
-    'get' => 'page_get'
+    'get' => 'page_get',
+    'put' => 'page_put'
 ];
 
 $appMenu = [

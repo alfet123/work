@@ -372,21 +372,30 @@ class DataBase {
     }
 
     // Обновляет данные по СВТ
-    public function updateSvt($svtData)
+    public function updateSvt($id, $data)
     {
-        return;
-//        $svt = [];
+        $fields = [
+            'modal_room_id' => 'room_id',
+            'modal_model_id' => 'model_id',
+            'modal_svt_number' => 'number',
+            'modal_svt_serial' => 'serial',
+            'modal_svt_inv' => 'inv',
+            'modal_svt_comment' => 'comment'
+        ];
 
         $query  = "update svt ";
         $query .= "set ";
-        $query .= "where id = '".$svtData['id']."'";
-
-        if ($result = mysqli_query($this->link, $query)) {
-            //$svt = mysqli_fetch_assoc($result);
-            mysqli_free_result($result);
+        $i = 1;
+        foreach ($data as $key => $value) {
+            if (!array_key_exists($key, $fields)) {
+                continue;
+            }
+            $query .= ($i > 1 ? ", " : "").$fields[$key]." = '".htmlspecialchars($value)."'";
+            $i++;
         }
+        $query .= " where id = '".htmlspecialchars($id)."'";
 
-//        return $svt;
+        return mysqli_query($this->link, $query);
     }
 
 /*****************/
