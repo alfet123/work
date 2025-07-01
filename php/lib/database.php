@@ -145,6 +145,56 @@ class DataBase {
         return $room;
     }
 
+    // Возвращает список отделений
+    public function getDepartList($currentId=null)
+    {
+        $depart = [];
+
+        $query  = "select * ";
+        $query .= "from depart ";
+        $query .= "order by name";
+
+        if ($result = mysqli_query($this->link, $query)) {
+            $key = 1;
+            while ($row = mysqli_fetch_assoc($result)) {
+                $depart[$key] = $row;
+                $depart[$key]['selected'] = '';
+                if (isset($currentId) && $currentId == $depart[$key]['id']) {
+                    $depart[$key]['selected'] = ' selected';
+                }
+                $key++;
+            }
+            mysqli_free_result($result);
+        }
+
+        return $depart;
+    }
+
+    // Возвращает список статусов
+    public function getStatusList($currentId=null)
+    {
+        $status = [];
+
+        $query  = "select * ";
+        $query .= "from status ";
+        $query .= "order by id";
+
+        if ($result = mysqli_query($this->link, $query)) {
+            $key = 1;
+            while ($row = mysqli_fetch_assoc($result)) {
+                $status[$key] = $row;
+                $status[$key]['selected'] = '';
+                if (isset($currentId) && $currentId == $status[$key]['id']) {
+                    $status[$key]['selected'] = ' selected';
+                }
+                $key++;
+            }
+            mysqli_free_result($result);
+        }
+
+        return $status;
+    }
+
     // Возвращает список типов СВТ
     public function getTypeList($currentId=null)
     {
@@ -218,6 +268,14 @@ class DataBase {
                 'field' => 'room_id',
                 'operator' => 'equal'
             ],
+            'depart_id' => [
+                'field' => 'depart_id',
+                'operator' => 'equal'
+            ],
+            'status_id' => [
+                'field' => 'status_id',
+                'operator' => 'equal'
+            ],
             'type_id' => [
                 'field' => 'type_id',
                 'operator' => 'equal'
@@ -236,6 +294,10 @@ class DataBase {
             ],
             'svt_inv' => [
                 'field' => 'svt_inv',
+                'operator' => 'like'
+            ],
+            'svt_comment' => [
+                'field' => 'svt_comment',
                 'operator' => 'like'
             ]
         ];
@@ -377,6 +439,7 @@ class DataBase {
         $fields = [
             'modal_room_id' => 'room_id',
             'modal_model_id' => 'model_id',
+            'modal_status_id' => 'status_id',
             'modal_svt_number' => 'number',
             'modal_svt_serial' => 'serial',
             'modal_svt_inv' => 'inv',
@@ -385,17 +448,17 @@ class DataBase {
 
         $query  = "update svt ";
         $query .= "set ";
-        $i = 1;
+        $i = 0;
         foreach ($data as $key => $value) {
             if (!array_key_exists($key, $fields)) {
                 continue;
             }
-            $query .= ($i > 1 ? ", " : "").$fields[$key]." = '".htmlspecialchars($value)."'";
+            $query .= ($i > 0 ? ", " : "").$fields[$key]." = '".htmlspecialchars($value)."'";
             $i++;
         }
         $query .= " where id = '".htmlspecialchars($id)."'";
 
-        return mysqli_query($this->link, $query);
+        return ($i > 0) ? mysqli_query($this->link, $query) : false;
     }
 
 /*****************/

@@ -38,6 +38,7 @@ const modalSection = document.querySelector('section.modal');
 const modalTitle = modalSection.querySelector('div#modal_title');
 const modalClose = modalSection.querySelector('.modal-close');
 
+const modalStatus = modalSection.querySelector('select#modal_status_id');
 const modalBuild = modalSection.querySelector('select#modal_build_id');
 const modalFloor = modalSection.querySelector('select#modal_floor_id');
 const modalRoom = modalSection.querySelector('select#modal_room_id');
@@ -94,6 +95,7 @@ const modalData = {};
 const modalChanges = {};
 
 const modalFormFields = [
+  {element: modalStatus},
   {element: modalBuild},
   {element: modalFloor},
   {element: modalRoom},
@@ -129,7 +131,8 @@ const checkChanged = function() {
 
 // Проверка заполнения обязательных полей
 const isEmpty = function() {
-  return modalBuild.value.trim().length === 0 ||
+  return modalStatus.value.trim().length === 0 ||
+         modalBuild.value.trim().length === 0 ||
          modalFloor.value.trim().length === 0 ||
          modalRoom.value.trim().length === 0 ||
          modalType.value.trim().length === 0 ||
@@ -139,7 +142,8 @@ const isEmpty = function() {
 
 // Проверка измененных значений
 const isChanged = function() {
-  return modalBuild.value.trim() !== modalData.modal_build_id ||
+  return modalStatus.value.trim() !== modalData.modal_status_id ||
+         modalBuild.value.trim() !== modalData.modal_build_id ||
          modalFloor.value.trim() !== modalData.modal_floor_id ||
          modalRoom.value.trim() !== modalData.modal_room_id ||
          modalType.value.trim() !== modalData.modal_type_id ||
@@ -338,6 +342,7 @@ buttonLast.addEventListener('click', clickPagesButton);
 // Открыть модальное окно
 const renderModal = function(svtData) {
 
+  modalData.modal_status_id = svtData['status_id'];
   modalData.modal_build_id = svtData['build_id'];
   modalData.modal_floor_id = svtData['floor_id'];
   modalData.modal_room_id = svtData['room_id'];
@@ -355,6 +360,7 @@ const renderModal = function(svtData) {
 
   modalSvtId.value = svtData['svt_id'];
 
+  loadSprav(modalStatus, 'status', null, modalData.modal_status_id);
   loadSprav(modalBuild, 'build', null, modalData.modal_build_id);
   loadSprav(modalFloor, 'floor', modalData.modal_build_id, modalData.modal_floor_id);
   loadSprav(modalRoom, 'room', modalData.modal_floor_id, modalData.modal_room_id );
@@ -375,6 +381,9 @@ const closeModal = function() {
   Object.keys(modalData).forEach(key => delete modalData[key]);
 
   modalTitle.innerHTML = "";
+
+  modalStatus.value = null;
+  modalStatus.innerHTML = "";
 
   modalBuild.value = null;
   modalBuild.innerHTML = "";
@@ -404,6 +413,7 @@ const closeModal = function() {
   modalButtonReset.setAttribute("disabled", "");
   modalButtonSave.setAttribute("disabled", "");
 
+  delete modalData.modal_status_id;
   delete modalData.modal_build_id;
   delete modalData.modal_floor_id;
   delete modalData.modal_room_id;
@@ -424,6 +434,7 @@ modalButtonClose.addEventListener('click', closeModal);
 
 // Сбросить (восстановить) исходные данные модального окна
 const resetModal = function() {
+  loadSprav(modalStatus, 'status', null, modalData.modal_status_id);
   loadSprav(modalBuild, 'build', null, modalData.modal_build_id);
   loadSprav(modalFloor, 'floor', modalData.modal_build_id, modalData.modal_floor_id);
   loadSprav(modalRoom, 'room', modalData.modal_floor_id, modalData.modal_room_id );
@@ -498,6 +509,7 @@ const changeModalForm = function(event) {
 //  console.log(`${event.target.name}: ${event.target.value} (${modalData[event.target.name]})`);
 }
 
+modalStatus.addEventListener('change', changeModalForm);
 modalBuild.addEventListener('change', changeModalForm);
 modalFloor.addEventListener('change', changeModalForm);
 modalRoom.addEventListener('change', changeModalForm);

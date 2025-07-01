@@ -23,6 +23,10 @@ if (isset($appItemId)) {
     $currentBuildId = (isset($svtFilter['build_id'])) ? $svtFilter['build_id'] : "";
     $currentFloorId = (isset($svtFilter['floor_id'])) ? $svtFilter['floor_id'] : "";
     $currentRoomId = (isset($svtFilter['room_id'])) ? $svtFilter['room_id'] : "";
+
+    $currentDepartId = (isset($svtFilter['depart_id'])) ? $svtFilter['depart_id'] : "";
+    $currentStatusId = (isset($svtFilter['status_id'])) ? $svtFilter['status_id'] : "";
+
     $currentTypeId = (isset($svtFilter['type_id'])) ? $svtFilter['type_id'] : "";
     $currentModelId = (isset($svtFilter['model_id'])) ? $svtFilter['model_id'] : "";
 
@@ -30,6 +34,10 @@ if (isset($appItemId)) {
     $buildList = DataBase::instance()->getBuildList();
     $floorList = DataBase::instance()->getFloorList($currentBuildId);
     $roomList = DataBase::instance()->getRoomList($currentFloorId);
+
+    $departList = DataBase::instance()->getDepartList();
+    $statusList = DataBase::instance()->getStatusList();
+
     $typeList = DataBase::instance()->getTypeList();
     $modelList = DataBase::instance()->getModelList($currentTypeId);
 
@@ -77,6 +85,10 @@ if (isset($appItemId)) {
         'currentFloorId' => $currentFloorId,
         'roomList' => $roomList,
         'currentRoomId' => $currentRoomId,
+        'departList' => $departList,
+        'currentDepartId' => $currentDepartId,
+        'statusList' => $statusList,
+        'currentStatusId' => $currentStatusId,
         'typeList' => $typeList,
         'currentTypeId' => $currentTypeId,
         'modelList' => $modelList,

@@ -10,6 +10,10 @@ $data = [];
             $data = DataBase::instance()->getSvtById($appItemId);
             break;
 
+        case 'status':
+            $data = DataBase::instance()->getStatusList($appCurrentId);
+            break;
+
         case 'build':
             $data = DataBase::instance()->getBuildList($appCurrentId);
             break;

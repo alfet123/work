@@ -65,7 +65,7 @@ button:disabled {
 /*******************/
 
 .page-header {
-    padding: 20px;
+    padding: 10px;
 }
 
 .menu {
@@ -291,6 +291,15 @@ button:disabled {
 
 .svt-filter-form {
     display: flex;
+    flex-direction: column;
+}
+
+.svt-filter-section {
+    display: flex;
+}
+
+.svt-filter-section:first-child {
+    margin-bottom: 10px;
 }
 
 .svt-filter-label {

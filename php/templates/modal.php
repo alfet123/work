@@ -13,6 +13,11 @@
     <input hidden readonly type="text" id="modal_svt_id" name="modal_svt_id" value="">
 
     <div class="modal-data-element">
+    <label class="modal-label" for="modal_status_id">Статус</label>
+    <select class="modal-select" name="modal_status_id" id="modal_status_id" required></select>
+    </div>
+
+    <div class="modal-data-element">
     <label class="modal-label" for="modal_build_id">Здание</label>
     <select class="modal-select" name="modal_build_id" id="modal_build_id" required></select>
     </div>
