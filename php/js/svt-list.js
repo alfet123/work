@@ -1,7 +1,7 @@
 (function() {
 
 const documentHtml = document.querySelector('html');
-//const documentBody = document.querySelector('body');
+const documentBody = document.querySelector('body');
 
 // Элементы формы фильтра
 const formSvtFilter = document.querySelector('form#svt_filter');
@@ -431,6 +431,11 @@ const closeModal = function() {
 
 modalClose.addEventListener('click', closeModal);
 modalButtonClose.addEventListener('click', closeModal);
+documentBody.addEventListener('keydown', (event) => {
+  if (event.key === "Escape") {
+    closeModal();
+  }
+});
 
 // Сбросить (восстановить) исходные данные модального окна
 const resetModal = function() {
