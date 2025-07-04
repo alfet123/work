@@ -137,11 +137,25 @@ button:disabled {
 }
 
 .form-element {
-    margin-right: 10px;
+    position: relative;
+    margin-right: 25px;
 }
 
 .form-element-last {
     margin-right: 0;
+}
+
+.form-element-clear-btn {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    right: -16px;
+    bottom: 0;
+    width: 15px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid gray;
+    border-radius: 2px;
 }
 
 .bg-pale-yellow {
