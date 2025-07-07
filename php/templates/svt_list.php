@@ -28,7 +28,7 @@ $tableSvt = [
         <input hidden readonly type="text" id="page_current" name="page_current" value="<?=$svtPages['current'];?>">
 
         <div class="form-element">
-        <div class="form-element-clear-btn">x</div>
+        <div class="form-element-clear-btn"></div>
         <label class="svt-filter-label" for="build_id">Здание</label>
         <select class="svt-filter-select" name="build_id" id="build_id">
             <option value="" hidden disabled<?=(empty($currentBuildId))?" selected":"";?>>&nbsp;</option>
@@ -39,7 +39,7 @@ $tableSvt = [
         </div>
 
         <div class="form-element">
-        <div class="form-element-clear-btn">x</div>
+        <div class="form-element-clear-btn"></div>
         <label class="svt-filter-label" for="floor_id">Этаж</label>
         <select class="svt-filter-select" name="floor_id" id="floor_id"<?=count($floorList) ? "" : " disabled";?>>
             <option value="" hidden disabled<?=(empty($currentFloorId))?" selected":"";?>>&nbsp;</option>
@@ -50,7 +50,7 @@ $tableSvt = [
         </div>
 
         <div class="form-element">
-        <div class="form-element-clear-btn">x</div>
+        <div class="form-element-clear-btn"></div>
         <label class="svt-filter-label" for="room_id">Кабинет</label>
         <select class="svt-filter-select" name="room_id" id="room_id"<?=count($roomList) ? "" : " disabled";?>>
             <option value="" hidden disabled<?=(empty($currentRoomId))?" selected":"";?>>&nbsp;</option>
@@ -61,7 +61,7 @@ $tableSvt = [
         </div>
 
         <div class="form-element">
-        <div class="form-element-clear-btn">x</div>
+        <div class="form-element-clear-btn"></div>
         <label class="svt-filter-label" for="depart_id">Отделение</label>
         <select class="svt-filter-select" name="depart_id" id="depart_id"<?=count($departList) ? "" : " disabled";?>>
             <option value="" hidden disabled<?=(empty($currentDepartId))?" selected":"";?>>&nbsp;</option>
@@ -72,7 +72,7 @@ $tableSvt = [
         </div>
 
         <div class="form-element">
-        <div class="form-element-clear-btn">x</div>
+        <div class="form-element-clear-btn"></div>
         <label class="svt-filter-label" for="status_id">Статус</label>
         <select class="svt-filter-select" name="status_id" id="status_id"<?=count($statusList) ? "" : " disabled";?>>
             <option value="" hidden disabled<?=(empty($currentStatusId))?" selected":"";?>>&nbsp;</option>
@@ -83,7 +83,7 @@ $tableSvt = [
         </div>
 
         <div class="form-element">
-        <div class="form-element-clear-btn">x</div>
+        <div class="form-element-clear-btn"></div>
         <label class="svt-filter-label" for="svt_comment">Примечание</label>
         <input class="svt-filter-text" type="text" size="32" maxlength="64" id="svt_comment" name="svt_comment" value="<?=$svtFilter['svt_comment'];?>">
         </div>
@@ -93,7 +93,7 @@ $tableSvt = [
     <div class="svt-filter-section">
 
         <div class="form-element">
-        <div class="form-element-clear-btn">x</div>
+        <div class="form-element-clear-btn"></div>
         <label class="svt-filter-label" for="type_id">Тип</label>
         <select class="svt-filter-select" name="type_id" id="type_id">
             <option value="" hidden disabled<?=(empty($currentTypeId))?" selected":"";?>>&nbsp;</option>
@@ -104,7 +104,7 @@ $tableSvt = [
         </div>
 
         <div class="form-element">
-        <div class="form-element-clear-btn">x</div>
+        <div class="form-element-clear-btn"></div>
         <label class="svt-filter-label" for="model_id">Модель</label>
         <select class="svt-filter-select" name="model_id" id="model_id"<?=count($modelList) ? "" : " disabled";?>>
             <option value="" hidden disabled<?=(empty($currentModelId))?" selected":"";?>>&nbsp;</option>
@@ -115,19 +115,19 @@ $tableSvt = [
         </div>
 
         <div class="form-element">
-        <div class="form-element-clear-btn">x</div>
+        <div class="form-element-clear-btn"></div>
         <label class="svt-filter-label" for="svt_number">№ ТК</label>
         <input class="svt-filter-text" type="text" size="8" maxlength="8" id="svt_number" name="svt_number" value="<?=$svtFilter['svt_number'];?>">
         </div>
 
         <div class="form-element">
-        <div class="form-element-clear-btn">x</div>
+        <div class="form-element-clear-btn"></div>
         <label class="svt-filter-label" for="svt_serial">Серийный номер</label>
         <input class="svt-filter-text" type="text" size="16" maxlength="32" id="svt_serial" name="svt_serial" value="<?=$svtFilter['svt_serial'];?>">
         </div>
 
         <div class="form-element">
-        <div class="form-element-clear-btn">x</div>
+        <div class="form-element-clear-btn"></div>
         <label class="svt-filter-label" for="svt_inv">Инвентарный номер</label>
         <input class="svt-filter-text" type="text" size="12" maxlength="16" id="svt_inv" name="svt_inv" value="<?=$svtFilter['svt_inv'];?>">
         </div>

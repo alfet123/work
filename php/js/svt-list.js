@@ -13,6 +13,8 @@ const selectRoom = formSvtFilter.querySelector('select#room_id');
 const selectType = formSvtFilter.querySelector('select#type_id');
 const selectModel = formSvtFilter.querySelector('select#model_id');
 
+const formElementClearBtn = formSvtFilter.querySelector('div.form-element-clear-btn');
+
 const buttonSubmit = formSvtFilter.querySelector('button#form_submit');
 const buttonReset = formSvtFilter.querySelector('button#form_reset');
 
@@ -514,6 +516,10 @@ const changeModalForm = function(event) {
 //  console.log(`${event.target.name}: ${event.target.value} (${modalData[event.target.name]})`);
 }
 
+const clearFormElement = function(event) {
+  console.log(event.target);
+}
+
 modalStatus.addEventListener('change', changeModalForm);
 modalBuild.addEventListener('change', changeModalForm);
 modalFloor.addEventListener('change', changeModalForm);
@@ -525,5 +531,7 @@ modalSvtNumber.addEventListener('input', changeModalForm);
 modalSvtSerial.addEventListener('input', changeModalForm);
 modalSvtInv.addEventListener('input', changeModalForm);
 modalSvtComment.addEventListener('input', changeModalForm);
+
+formElementClearBtn.addEventListener('click', clearFormElement);
 
 })();
