@@ -517,7 +517,7 @@ const changeModalForm = function(event) {
 }
 
 const clearFormElement = function(event) {
-  console.log(event.target);
+  console.log(event.target.parentNode);
 }
 
 modalStatus.addEventListener('change', changeModalForm);

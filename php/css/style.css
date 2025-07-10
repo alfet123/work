@@ -149,21 +149,40 @@ button:disabled {
     position: absolute;
     margin: 0;
     padding: 0;
-    right: 4px;
-    bottom: 5px;
+    right: 6px;
+    top: 7px;
     width: 10px;
     height: 10px;
-    text-align: center;
+    /*text-align: center;*/
     /*color: gray;*/
     cursor: pointer;
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 12px;
+    /*background-color: white;*/
+    /*border: 1px solid gray;*/
+    /*border-radius: 12px;*/
     /*z-index: 10;*/
 }
 
 .form-element-clear-btn:hover {
     /*color: black;*/
+}
+
+.clear-btn-line {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    left: 1px;
+    top: 4px;
+    width: 8px;
+    height: 2px;
+    background-color: rgb(192, 96, 96);
+}
+
+.clear-btn-line-1 {
+    transform: rotate(45deg);
+}
+
+.clear-btn-line-2 {
+    transform: rotate(-45deg);
 }
 
 .svt-filter-text {

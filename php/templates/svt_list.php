@@ -28,7 +28,10 @@ $tableSvt = [
         <input hidden readonly type="text" id="page_current" name="page_current" value="<?=$svtPages['current'];?>">
 
         <div class="form-element">
-        <div class="form-element-clear-btn"></div>
+        <div class="form-element-clear-btn">
+            <div class="clear-btn-line  clear-btn-line-1"></div>
+            <div class="clear-btn-line  clear-btn-line-2"></div>
+        </div>
         <label class="svt-filter-label" for="build_id">Здание</label>
         <select class="svt-filter-select" name="build_id" id="build_id">
             <option value="" hidden disabled<?=(empty($currentBuildId))?" selected":"";?>>&nbsp;</option>
