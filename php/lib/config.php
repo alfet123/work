@@ -1,6 +1,7 @@
 <?php
 
 $appPagesPath = 'pages';
+$appWidgetsPath = 'widgets';
 $appTemplatesPath = 'templates';
 
 $appPageError = 'page_error';

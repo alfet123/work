@@ -27,113 +27,101 @@ $tableSvt = [
 
         <input hidden readonly type="text" id="page_current" name="page_current" value="<?=$svtPages['current'];?>">
 
-        <div class="form-element">
-        <div class="form-element-clear-btn">
-            <div class="clear-btn-line  clear-btn-line-1"></div>
-            <div class="clear-btn-line  clear-btn-line-2"></div>
-        </div>
-        <label class="svt-filter-label" for="build_id">Здание</label>
-        <select class="svt-filter-select" name="build_id" id="build_id">
-            <option value="" hidden disabled<?=(empty($currentBuildId))?" selected":"";?>>&nbsp;</option>
-            <?php foreach ($buildList as $key => $value): ?>
-                <option value="<?=$value['id'];?>"<?=($value['id']==$currentBuildId)?" selected":"";?>><?=$value['name'];?></option>
-            <?php endforeach; ?>
-        </select>
-        </div>
+        <?php includeWidget('select', [
+            'id' => 'build_id',
+            'name' => 'build_id',
+            'title' => 'Здание',
+            'dataList' => $buildList,
+            'dataCurrentId' => $currentBuildId
+        ]); ?>
 
-        <div class="form-element">
-        <div class="form-element-clear-btn"></div>
-        <label class="svt-filter-label" for="floor_id">Этаж</label>
-        <select class="svt-filter-select" name="floor_id" id="floor_id"<?=count($floorList) ? "" : " disabled";?>>
-            <option value="" hidden disabled<?=(empty($currentFloorId))?" selected":"";?>>&nbsp;</option>
-            <?php foreach ($floorList as $key => $value): ?>
-                <option value="<?=$value['id'];?>"<?=($value['id']==$currentFloorId)?" selected":"";?>><?=$value['name'];?></option>
-            <?php endforeach; ?>
-        </select>
-        </div>
+       <?php includeWidget('select', [
+            'id' => 'floor_id',
+            'name' => 'floor_id',
+            'title' => 'Этаж',
+            'dataList' => $floorList,
+            'dataCurrentId' => $currentFloorId
+        ]); ?>
 
-        <div class="form-element">
-        <div class="form-element-clear-btn"></div>
-        <label class="svt-filter-label" for="room_id">Кабинет</label>
-        <select class="svt-filter-select" name="room_id" id="room_id"<?=count($roomList) ? "" : " disabled";?>>
-            <option value="" hidden disabled<?=(empty($currentRoomId))?" selected":"";?>>&nbsp;</option>
-            <?php foreach ($roomList as $key => $value): ?>
-                <option value="<?=$value['id'];?>"<?=($value['id']==$currentRoomId)?" selected":"";?>><?=trim($value['number']." ".$value['name']);?></option>
-            <?php endforeach; ?>
-        </select>
-        </div>
+        <?php includeWidget('select', [
+            'id' => 'room_id',
+            'name' => 'room_id',
+            'title' => 'Кабинет',
+            'dataList' => $roomList,
+            'dataCurrentId' => $currentRoomId
+        ]); ?>
 
-        <div class="form-element">
-        <div class="form-element-clear-btn"></div>
-        <label class="svt-filter-label" for="depart_id">Отделение</label>
-        <select class="svt-filter-select" name="depart_id" id="depart_id"<?=count($departList) ? "" : " disabled";?>>
-            <option value="" hidden disabled<?=(empty($currentDepartId))?" selected":"";?>>&nbsp;</option>
-            <?php foreach ($departList as $key => $value): ?>
-                <option value="<?=$value['id'];?>"<?=($value['id']==$currentDepartId)?" selected":"";?>><?=$value['name'];?></option>
-            <?php endforeach; ?>
-        </select>
-        </div>
+        <?php includeWidget('select', [
+            'id' => 'depart_id',
+            'name' => 'depart_id',
+            'title' => 'Отделение',
+            'dataList' => $departList,
+            'dataCurrentId' => $currentDepartId
+        ]); ?>
 
-        <div class="form-element">
-        <div class="form-element-clear-btn"></div>
-        <label class="svt-filter-label" for="status_id">Статус</label>
-        <select class="svt-filter-select" name="status_id" id="status_id"<?=count($statusList) ? "" : " disabled";?>>
-            <option value="" hidden disabled<?=(empty($currentStatusId))?" selected":"";?>>&nbsp;</option>
-            <?php foreach ($statusList as $key => $value): ?>
-                <option value="<?=$value['id'];?>"<?=($value['id']==$currentStatusId)?" selected":"";?>><?=$value['name'];?></option>
-            <?php endforeach; ?>
-        </select>
-        </div>
+        <?php includeWidget('select', [
+            'id' => 'status_id',
+            'name' => 'status_id',
+            'title' => 'Статус',
+            'dataList' => $statusList,
+            'dataCurrentId' => $currentStatusId
+        ]); ?>
 
-        <div class="form-element">
-        <div class="form-element-clear-btn"></div>
-        <label class="svt-filter-label" for="svt_comment">Примечание</label>
-        <input class="svt-filter-text" type="text" size="32" maxlength="64" id="svt_comment" name="svt_comment" value="<?=$svtFilter['svt_comment'];?>">
-        </div>
+        <?php includeWidget('input', [
+            'id' => 'svt_comment',
+            'name' => 'svt_comment',
+            'title' => 'Примечание',
+            'size' => '32',
+            'maxlength' => '64',
+            'value' => $svtFilter['svt_comment']
+        ]); ?>
 
     </div>
 
     <div class="svt-filter-section">
 
-        <div class="form-element">
-        <div class="form-element-clear-btn"></div>
-        <label class="svt-filter-label" for="type_id">Тип</label>
-        <select class="svt-filter-select" name="type_id" id="type_id">
-            <option value="" hidden disabled<?=(empty($currentTypeId))?" selected":"";?>>&nbsp;</option>
-            <?php foreach ($typeList as $key => $value): ?>
-                <option value="<?=$value['id'];?>"<?=($value['id']==$currentTypeId)?" selected":"";?>><?=$value['name'];?></option>
-            <?php endforeach; ?>
-        </select>
-        </div>
+        <?php includeWidget('select', [
+            'id' => 'type_id',
+            'name' => 'type_id',
+            'title' => 'Тип',
+            'dataList' => $typeList,
+            'dataCurrentId' => $currentTypeId
+        ]); ?>
 
-        <div class="form-element">
-        <div class="form-element-clear-btn"></div>
-        <label class="svt-filter-label" for="model_id">Модель</label>
-        <select class="svt-filter-select" name="model_id" id="model_id"<?=count($modelList) ? "" : " disabled";?>>
-            <option value="" hidden disabled<?=(empty($currentModelId))?" selected":"";?>>&nbsp;</option>
-            <?php foreach ($modelList as $key => $value): ?>
-                <option value="<?=$value['id'];?>"<?=($value['id']==$currentModelId)?" selected":"";?>><?=$value['name'];?></option>
-            <?php endforeach; ?>
-        </select>
-        </div>
+        <?php includeWidget('select', [
+            'id' => 'model_id',
+            'name' => 'model_id',
+            'title' => 'Модель',
+            'dataList' => $modelList,
+            'dataCurrentId' => $currentModelId
+        ]); ?>
 
-        <div class="form-element">
-        <div class="form-element-clear-btn"></div>
-        <label class="svt-filter-label" for="svt_number">№ ТК</label>
-        <input class="svt-filter-text" type="text" size="8" maxlength="8" id="svt_number" name="svt_number" value="<?=$svtFilter['svt_number'];?>">
-        </div>
+        <?php includeWidget('input', [
+            'id' => 'svt_number',
+            'name' => 'svt_number',
+            'title' => '№ ТК',
+            'size' => '8',
+            'maxlength' => '8',
+            'value' => $svtFilter['svt_number']
+        ]); ?>
 
-        <div class="form-element">
-        <div class="form-element-clear-btn"></div>
-        <label class="svt-filter-label" for="svt_serial">Серийный номер</label>
-        <input class="svt-filter-text" type="text" size="16" maxlength="32" id="svt_serial" name="svt_serial" value="<?=$svtFilter['svt_serial'];?>">
-        </div>
+        <?php includeWidget('input', [
+            'id' => 'svt_serial',
+            'name' => 'svt_serial',
+            'title' => 'Серийный номер',
+            'size' => '16',
+            'maxlength' => '32',
+            'value' => $svtFilter['svt_serial']
+        ]); ?>
 
-        <div class="form-element">
-        <div class="form-element-clear-btn"></div>
-        <label class="svt-filter-label" for="svt_inv">Инвентарный номер</label>
-        <input class="svt-filter-text" type="text" size="12" maxlength="16" id="svt_inv" name="svt_inv" value="<?=$svtFilter['svt_inv'];?>">
-        </div>
+        <?php includeWidget('input', [
+            'id' => 'svt_inv',
+            'name' => 'svt_inv',
+            'title' => 'Инвентарный номер',
+            'size' => '12',
+            'maxlength' => '16',
+            'value' => $svtFilter['svt_inv']
+        ]); ?>
 
         <div class="form-element">
         <label class="svt-filter-label">&nbsp;</label>

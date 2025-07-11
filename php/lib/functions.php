@@ -63,3 +63,21 @@ function includeTemplate($template, $data = [])
 
     echo $result;
 }
+
+// функция выводит виджет из заданного файла
+function includeWidget($widget, $data = [])
+{
+    $file = $GLOBALS['appWidgetsPath'].'/'.$widget.'.php';
+
+    $result = "";
+
+    if (file_exists($file)) {
+        $data = dataFiltering($data);
+        extract($data);
+        ob_start();
+        include($file);
+        $result = ob_get_clean();
+    }
+
+    echo $result;
+}

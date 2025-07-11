@@ -137,7 +137,7 @@ button:disabled {
 }
 
 .form-element {
-    position: relative;
+    /*position: relative;*/
     margin-right: 10px;
 }
 
@@ -145,14 +145,20 @@ button:disabled {
     margin-right: 0;
 }
 
+.form-element-label {
+
+}
+
 .form-element-clear-btn {
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    right: 6px;
-    top: 7px;
-    width: 10px;
-    height: 10px;
+    display: inline-block;
+    position: relative;
+    /*margin: 0;*/
+    /*padding: 0;*/
+    /*right: 6px;*/
+    /*top: 7px;*/
+    width: 8px;
+    height: 8px;
+
     /*text-align: center;*/
     /*color: gray;*/
     cursor: pointer;
@@ -348,7 +354,8 @@ button:disabled {
 }
 
 .svt-filter-label {
-    display: block;
+    display: inline-block;
+    margin-right: 5px;
     font-size: 10px;
 }
 
