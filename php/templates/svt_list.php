@@ -123,15 +123,21 @@ $tableSvt = [
             'value' => $svtFilter['svt_inv']
         ]); ?>
 
-        <div class="form-element">
-        <label class="svt-filter-label">&nbsp;</label>
-        <button type="submit" id="form_submit" name="form_submit">Найти</button>
-        </div>
+        <?php includeWidget('button', [
+            'class' => 'form-element',
+            'type' => 'submit',
+            'id' => 'form_submit',
+            'name' => 'form_submit',
+            'title' => 'Найти'
+        ]); ?>
 
-        <div class="form-element  form-element-last">
-        <label class="svt-filter-label">&nbsp;</label>
-        <button type="reset" id="form_reset" name="form_reset">Очистить</button>
-        </div>
+        <?php includeWidget('button', [
+            'class' => 'form-element  form-element-last',
+            'type' => 'reset',
+            'id' => 'form_reset',
+            'name' => 'form_reset',
+            'title' => 'Очистить'
+        ]); ?>
 
     </div>
 

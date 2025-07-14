@@ -13,7 +13,7 @@ const selectRoom = formSvtFilter.querySelector('select#room_id');
 const selectType = formSvtFilter.querySelector('select#type_id');
 const selectModel = formSvtFilter.querySelector('select#model_id');
 
-const formElementClearBtn = formSvtFilter.querySelector('div.form-element-clear-btn');
+const formElementClearButtons = formSvtFilter.querySelectorAll('div.form-element-clear-btn');
 
 const buttonSubmit = formSvtFilter.querySelector('button#form_submit');
 const buttonReset = formSvtFilter.querySelector('button#form_reset');
@@ -513,11 +513,21 @@ const changeModalForm = function(event) {
 
   }
   
-//  console.log(`${event.target.name}: ${event.target.value} (${modalData[event.target.name]})`);
 }
 
 const clearFormElement = function(event) {
-  console.log(event.target.parentNode);
+  const formElementInput = event.target.parentNode.parentNode.querySelector('input');
+  const formElementSelect = event.target.parentNode.parentNode.querySelector('select');
+
+  if (formElementInput !== null) {
+    //console.log(`input ${formElementInput.name} = ${formElementInput.value}`);
+    formElementInput.value = "";
+  }
+
+  if (formElementSelect !== null) {
+    //console.log(`select ${formElementSelect.name} = ${formElementSelect.value}`);
+    formElementSelect.value = null;
+  }
 }
 
 modalStatus.addEventListener('change', changeModalForm);
@@ -532,6 +542,8 @@ modalSvtSerial.addEventListener('input', changeModalForm);
 modalSvtInv.addEventListener('input', changeModalForm);
 modalSvtComment.addEventListener('input', changeModalForm);
 
-formElementClearBtn.addEventListener('click', clearFormElement);
+formElementClearButtons.forEach((clearButton) => {
+  clearButton.addEventListener('click', clearFormElement);
+});
 
 })();
