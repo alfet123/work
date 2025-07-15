@@ -28,6 +28,7 @@ $tableSvt = [
         <input hidden readonly type="text" id="page_current" name="page_current" value="<?=$svtPages['current'];?>">
 
         <?php includeWidget('select', [
+            'class' => 'form-element',
             'id' => 'build_id',
             'name' => 'build_id',
             'title' => 'Здание',
@@ -36,6 +37,7 @@ $tableSvt = [
         ]); ?>
 
        <?php includeWidget('select', [
+            'class' => 'form-element',
             'id' => 'floor_id',
             'name' => 'floor_id',
             'title' => 'Этаж',
@@ -44,6 +46,7 @@ $tableSvt = [
         ]); ?>
 
         <?php includeWidget('select', [
+            'class' => 'form-element',
             'id' => 'room_id',
             'name' => 'room_id',
             'title' => 'Кабинет',
@@ -52,6 +55,7 @@ $tableSvt = [
         ]); ?>
 
         <?php includeWidget('select', [
+            'class' => 'form-element',
             'id' => 'depart_id',
             'name' => 'depart_id',
             'title' => 'Отделение',
@@ -60,6 +64,7 @@ $tableSvt = [
         ]); ?>
 
         <?php includeWidget('select', [
+            'class' => 'form-element',
             'id' => 'status_id',
             'name' => 'status_id',
             'title' => 'Статус',
@@ -68,6 +73,7 @@ $tableSvt = [
         ]); ?>
 
         <?php includeWidget('input', [
+            'class' => 'form-element',
             'id' => 'svt_comment',
             'name' => 'svt_comment',
             'title' => 'Примечание',
@@ -81,6 +87,7 @@ $tableSvt = [
     <div class="svt-filter-section">
 
         <?php includeWidget('select', [
+            'class' => 'form-element',
             'id' => 'type_id',
             'name' => 'type_id',
             'title' => 'Тип',
@@ -89,6 +96,7 @@ $tableSvt = [
         ]); ?>
 
         <?php includeWidget('select', [
+            'class' => 'form-element',
             'id' => 'model_id',
             'name' => 'model_id',
             'title' => 'Модель',
@@ -97,6 +105,7 @@ $tableSvt = [
         ]); ?>
 
         <?php includeWidget('input', [
+            'class' => 'form-element',
             'id' => 'svt_number',
             'name' => 'svt_number',
             'title' => '№ ТК',
@@ -106,6 +115,7 @@ $tableSvt = [
         ]); ?>
 
         <?php includeWidget('input', [
+            'class' => 'form-element',
             'id' => 'svt_serial',
             'name' => 'svt_serial',
             'title' => 'Серийный номер',
@@ -115,6 +125,7 @@ $tableSvt = [
         ]); ?>
 
         <?php includeWidget('input', [
+            'class' => 'form-element',
             'id' => 'svt_inv',
             'name' => 'svt_inv',
             'title' => 'Инвентарный номер',
@@ -124,7 +135,7 @@ $tableSvt = [
         ]); ?>
 
         <?php includeWidget('button', [
-            'class' => 'form-element',
+            'class' => 'form-element  form-element-first-button',
             'type' => 'submit',
             'id' => 'form_submit',
             'name' => 'form_submit',
@@ -132,7 +143,7 @@ $tableSvt = [
         ]); ?>
 
         <?php includeWidget('button', [
-            'class' => 'form-element  form-element-last',
+            'class' => 'form-element  form-element-last-button',
             'type' => 'reset',
             'id' => 'form_reset',
             'name' => 'form_reset',
