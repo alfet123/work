@@ -12,6 +12,13 @@ const selectFloor = formSvtFilter.querySelector('select#floor_id');
 const selectRoom = formSvtFilter.querySelector('select#room_id');
 const selectType = formSvtFilter.querySelector('select#type_id');
 const selectModel = formSvtFilter.querySelector('select#model_id');
+const selectDepart = formSvtFilter.querySelector('select#depart_id');
+const selectStatus = formSvtFilter.querySelector('select#status_id');
+
+const inputNumber = formSvtFilter.querySelector('input#svt_number');
+const inputSerial = formSvtFilter.querySelector('input#svt_serial');
+const inputInv = formSvtFilter.querySelector('input#svt_inv');
+const inputComment = formSvtFilter.querySelector('input#svt_comment');
 
 const formElementClearButtons = formSvtFilter.querySelectorAll('div.form-element-clear-btn');
 
@@ -181,7 +188,7 @@ const checkModalData = function() {
 /********************************************/
 
 function renderSelectList(data, target, emptyOption=false, clear=[], checkValues=false) {
-  let clearList = [target];
+  var clearList = [target];
   if (clear.length) {
     clearList = clear;
   }
@@ -192,7 +199,7 @@ function renderSelectList(data, target, emptyOption=false, clear=[], checkValues
   Object.values(data).forEach((item) => {
     let name = item.name;
     if (target.name === 'room_id' || target.name === 'modal_room_id') {
-      name = (item.number + ' ' + item.name).trim();
+      name = (`${item.number} ${item.name}`).trim();
     }
     target.innerHTML += `<option value="${item.id}"${item.selected}>${name}</option>`;
   });
@@ -287,10 +294,6 @@ const changeSelectValue = function(event) {
 selectBuild.addEventListener('change', changeSelectValue);
 selectFloor.addEventListener('change', changeSelectValue);
 selectType.addEventListener('change', changeSelectValue);
-
-//modalBuild.addEventListener('change', changeSelectValue);
-//modalFloor.addEventListener('change', changeSelectValue);
-//modalType.addEventListener('change', changeSelectValue);
 
 /******************************************/
 /***  Обработчик выбора строки таблицы  ***/
@@ -516,8 +519,10 @@ const changeModalForm = function(event) {
 }
 
 const clearFormElement = function(event) {
-  const formElementInput = event.target.parentNode.parentNode.querySelector('input');
-  const formElementSelect = event.target.parentNode.parentNode.querySelector('select');
+  var formElement = event.target.parentNode.parentNode;
+
+  var formElementInput = formElement.querySelector('input');
+  var formElementSelect = formElement.querySelector('select');
 
   if (formElementInput !== null) {
     //console.log(`input ${formElementInput.name} = ${formElementInput.value}`);
@@ -528,6 +533,8 @@ const clearFormElement = function(event) {
     //console.log(`select ${formElementSelect.name} = ${formElementSelect.value}`);
     formElementSelect.value = null;
   }
+
+  event.target.classList.add('hidden');
 }
 
 modalStatus.addEventListener('change', changeModalForm);

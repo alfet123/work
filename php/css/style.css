@@ -128,10 +128,6 @@ button:disabled {
     border-top: 1px solid #bbb;
 }
 
-.hidden {
-    display: none;
-}
-
 .scroll-disable {
     overflow: hidden;
 }
@@ -159,8 +155,8 @@ button:disabled {
 .form-element-clear-btn {
     display: inline-block;
     position: relative;
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     cursor: pointer;
     background-image: url('../img/btn.svg');
 }
@@ -408,4 +404,12 @@ th {
 td {
     padding: 5px 10px;
     border: 1px solid gray;
+}
+
+/*********************/
+/*** Page Global 2 ***/
+/*********************/
+
+.hidden {
+    display: none;
 }
