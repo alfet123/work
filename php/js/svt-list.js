@@ -247,33 +247,27 @@ const clickSubmitButton = function() {
 // Очистка формы
 const clickResetButton = function() {
   window.location.href = "/";
-
-/*  inputSvtFilter.forEach((input) => {
-    input.defaultValue = "";
-    input.value = "";
-  });
-  selectSvtFilter.forEach((select) => {
-    for (let option of select.options) {
-      option.selected = false;
-      option.removeAttribute("selected");
-    }
-    select.options[0].selected = true;
-    select.options[0].setAttribute("selected", "");
-  });
-
-  clickSubmitButton();*/
 };
 
 buttonSubmit.addEventListener('click', clickSubmitButton);
 buttonReset.addEventListener('click', clickResetButton);
 
-/*******************************************/
-/***  Обработчик для выпадающих списков  ***/
-/*******************************************/
+/*********************************************/
+/***  Функции для элементов формы фильтра  ***/
+/*********************************************/
 
-// Обработчик выбора здания, этажа и типа
-const changeSelectValue = function(event) {
-  const selectName = select[event.target.name];
+// Переключение состояния кнопки очистки
+const switchClearBtn = function(element) {
+  const clearBtn = element.parentNode.querySelector('div.form-element-clear-btn');
+  if (element.value === "" || element.value === null) {
+    clearBtn.classList.add('hidden');
+  } else {
+    clearBtn.classList.remove('hidden');
+  }
+}
+
+// Загрузка значений для выбранного элемента списка
+const loadSelectValues = function(event, selectName) {
   const requestURL = `get/${selectName.source}/${event.target.value}`;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', requestURL);
@@ -291,9 +285,26 @@ const changeSelectValue = function(event) {
   xhr.send();
 };
 
-selectBuild.addEventListener('change', changeSelectValue);
-selectFloor.addEventListener('change', changeSelectValue);
-selectType.addEventListener('change', changeSelectValue);
+// Обработчик изменения значения поля
+const changeValue = function(event) {
+  switchClearBtn(event.target);
+  if (event.target.name in select) {
+    loadSelectValues(event, select[event.target.name]);
+  }
+}
+
+selectBuild.addEventListener('change', changeValue);
+selectFloor.addEventListener('change', changeValue);
+selectRoom.addEventListener('change', changeValue);
+selectType.addEventListener('change', changeValue);
+selectModel.addEventListener('change', changeValue);
+selectDepart.addEventListener('change', changeValue);
+selectStatus.addEventListener('change', changeValue);
+
+inputNumber.addEventListener('input', changeValue);
+inputSerial.addEventListener('input', changeValue);
+inputInv.addEventListener('input', changeValue);
+inputComment.addEventListener('input', changeValue);
 
 /******************************************/
 /***  Обработчик выбора строки таблицы  ***/
