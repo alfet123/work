@@ -519,7 +519,7 @@ const changeModalForm = function(event) {
 
   if (event.target.name in select) {
 
-    changeSelectValue(event);
+    loadSelectValues(event, select[event.target.name]);
 
   } else {
 
@@ -536,12 +536,10 @@ const clearFormElement = function(event) {
   var formElementSelect = formElement.querySelector('select');
 
   if (formElementInput !== null) {
-    //console.log(`input ${formElementInput.name} = ${formElementInput.value}`);
     formElementInput.value = "";
   }
 
   if (formElementSelect !== null) {
-    //console.log(`select ${formElementSelect.name} = ${formElementSelect.value}`);
     formElementSelect.value = null;
   }
 
