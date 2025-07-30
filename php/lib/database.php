@@ -346,10 +346,6 @@ class DataBase {
         $query .= self::whereExpression($svtFilter);
         $query .= "limit 1";
 
-//echo "<pre><br>";
-//echo "getSvtCount() -> ".$query;
-//echo "</pre>";
-
         if ($result = mysqli_query($this->link, $query)) {
             if ($row = mysqli_fetch_assoc($result)) {
                 $svtCount = intval($row['count']);
@@ -381,10 +377,6 @@ class DataBase {
         $query .= self::whereExpression($svtFilter);
         $query .= self::orderExpression();
         $query .= "limit ".$offset.", ".$limit;
-
-//echo "<pre><br>";
-//echo "getSvtList() -> ".$query;
-//echo "</pre>";
 
         if ($result = mysqli_query($this->link, $query)) {
             while ($row = mysqli_fetch_assoc($result)) {
@@ -459,6 +451,49 @@ class DataBase {
         $query .= " where id = '".htmlspecialchars($id)."'";
 
         return ($i > 0) ? mysqli_query($this->link, $query) : false;
+    }
+
+/**************/
+/***  ROOM  ***/
+/**************/
+
+    // Возвращает количество кабинетов
+    public function getRoomCount($roomFilter=[])
+    {
+        $roomCount = 0;
+
+        $query  = "select count(*) as 'count' ";
+        $query .= "from view_room_all ";
+        $query .= self::whereExpression($roomFilter);
+        $query .= "limit 1";
+
+        if ($result = mysqli_query($this->link, $query)) {
+            if ($row = mysqli_fetch_assoc($result)) {
+                $roomCount = intval($row['count']);
+            }
+            mysqli_free_result($result);
+        }
+
+        return $roomCount;
+    }
+
+    // Возвращает все ID из таблицы room
+    public function getRoomId()
+    {
+        $roomId = [];
+
+        $query  = "select id ";
+        $query .= "from room ";
+        $query .= "order by id";
+
+        if ($result = mysqli_query($this->link, $query)) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $roomId[$row['id']] = $row['id'];
+            }
+            mysqli_free_result($result);
+        }
+
+        return $roomId;
     }
 
 /*****************/
